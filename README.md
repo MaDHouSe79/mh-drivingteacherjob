@@ -116,7 +116,7 @@ QBShared.StarterItems = {
 },
 ```
 
-#### Add to `resources/[qb]/qb-radialmenu` inside the `Config.JobInteractions`:
+#### Add to `resources/[qb]/qb-radialmenu/config.lua` inside the `Config.JobInteractions`:
 ```lua
 ["drivingteacher"] = {
     {
