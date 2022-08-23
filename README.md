@@ -13,7 +13,8 @@
 - The `N licence` this is only when a player does not have the N licence so you know you this player is a starter)
 - To take a the licence from a player use /take-licence [id] (this player is no longer licensed) Ex: `/take-licence 1`
 
-
+## VIDEO
+- [youtube](https://www.youtube.com/watch?v=b_7tpWBxBZ0)
 
 ## NOTE !!:
 - Edit `qb-smallresources/config.lua` and remove or set true to false for vehicles you don't want to be blacklisted
