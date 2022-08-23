@@ -1,8 +1,7 @@
 # A RP Driving Teacher Job for QBCore.
-
+- There are 11 licences you can give to players with this job.
 
 ## How it works:
-- There are 11 licences you can give to players with this job.
 - To bill a player for a licence use `/bill [id] [amount]`
 - you can also add some objects on the road as drive test obstacles, so the student can show his/her driving skills ;)  
 - when spawning a vehicle, you must go insite this vehicle drivers seat and use `/givekeys [id]`
@@ -40,12 +39,13 @@
 ![foto1](https://naskho.org/images/ReadPlease.gif)
 
 
-#### Add to `management_funds database table`
+
+## Add to `management_funds database table`
 ```sql
 INSERT INTO `management_funds` (`job_name`, `amount`, `type`) VALUES ('drivingteacher', '0', 'boss');
 ```
 
-#### Edit `qb-core\server\player.lua` around line 120 to this code:
+## Edit `qb-core\server\player.lua` around line 120 to this code:
 ```lua
 PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
     ['N'] = false, -- theory
@@ -76,14 +76,14 @@ QBShared.StarterItems = {
 }
 ```
 
-#### Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenus`:
--- This is the bossmenu location
+## Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenus`:
+- This is the bossmenu location
 ```lua
 ['drivingteacher'] = {
     vector3(215.24, -1401.76, 30.58) --  (Bossmenu)
 },
 ```
-#### Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenuZones`:
+## Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenuZones`:
 - This is the bossmenu zone
 ```lua
 ['drivingteacher'] = {
@@ -91,7 +91,7 @@ QBShared.StarterItems = {
 },
 ```
 
-#### Add To `qb-core/qb-shared/jobs.lua`:
+## Add To `qb-core/qb-shared/jobs.lua`:
 ```lua
 ['drivingteacher'] = {
     name  = 'drivingteacher',
@@ -125,7 +125,7 @@ QBShared.StarterItems = {
 ```
 
 
-#### Add to `resources/[qb]/qb-radialmenu/config.lua` inside the `Config.JobInteractions`:
+## Add to `resources/[qb]/qb-radialmenu/config.lua` inside the `Config.JobInteractions`:
 ```lua
 ["drivingteacher"] = {
     {
@@ -261,7 +261,7 @@ QBShared.StarterItems = {
 ```
 
 
-#### Edit qb-phone Option 1 `resources/[qb]/qb-phone/server.lua` around line 1055
+## Edit qb-phone Option 1 `resources/[qb]/qb-phone/server.lua` around line 1055
 - Change the Command bill with this code below
 ```lua
 QBCore.Commands.Add('bill', 'Bill A Player', {{name = 'id', help = 'Player ID'}, {name = 'amount', help = 'Fine Amount'}}, false, function(source, args)
@@ -295,19 +295,21 @@ end)
 ```
 
 
-#### Edit qb-phone Option 2 `resources/[qb]/qb-phone/server.lua` around line 1055
+## Edit qb-phone Option 2 `resources/[qb]/qb-phone/server.lua` around line 1055
 - You can add `or biller.PlayerData.job.name == 'drivingteacher'` 
 - to the job check if statement and add this to the end before `then`
--
-- example: `if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then`
+- example: 
+```lua
+if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then
+```
 
 
 
 
-#### Edit `qb-phone/html/js/lawyers.js`
+## Edit `qb-phone/html/js/lawyers.js`
 - to call a driving teacher (if this player is online)
 - you can change the colers in rgb()
-- 
+
 
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 9/10
@@ -316,7 +318,7 @@ var drivingteacher = [];
 ```
 
 
-## add to `qb-phone/html/js/lawyers.js` around line 36
+## Add to `qb-phone/html/js/lawyers.js` around line 36
 ```js
 if (lawyer.typejob == "drivingteacher") {
     drivingteacher.push(lawyer);
@@ -329,7 +331,7 @@ if (lawyer.typejob == "drivingteacher") {
 $(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
 if (drivingteacher.length > 0) {
     $.each(drivingteacher, function(i, lawyer10) {
-        var element = '<div class="lawyer-list" id="lawyerid1-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
+        var element = '<div class="lawyer-list" id="lawyerid10-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
         $(".lawyers-list").append(element);
         $("#lawyerid1-" + i).data('LawyerData', lawyer10);
     });
