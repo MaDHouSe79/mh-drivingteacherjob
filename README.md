@@ -36,7 +36,16 @@
 ![foto1](https://naskho.org/images/ReadPlease.gif)
 
 
-#### Edit `qb-core\server\player.lua` around line 120 to this code:
+#### EDIT `resources/[qb]/qb-cityhall/config.lua` around line 38
+- to disable the Driving School Blip
+- set this to `showBlip = false,`
+
+#### EDIT `resources/[qb]/qb-cityhall/config.lua` around line 72
+- to disable the Driving School Ped
+- set this to `drivingschool = false`
+
+
+#### Edit `resources/[qb]/qb-core\server\player.lua` around line 120 to this code:
 ```lua
 PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
     ['N'] = false, -- theory
@@ -56,7 +65,7 @@ PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
 }
 ```
 
-#### Edit `qb-core\shared\main.lua`:
+#### Edit `resources/[qb]/qb-core\shared\main.lua`:
 - why? cause if people join the server and create a new charactert,
 - they get a driver_license, and we don't want that.
 ```lua
