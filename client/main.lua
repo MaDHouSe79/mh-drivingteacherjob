@@ -15,10 +15,10 @@ local currentPlate = nil
 local inDuty
 
 local function SetFuel(vehicle, fuel)
-	if type(fuel) == 'number' and fuel >= 0 and fuel <= 100 then
-		SetVehicleFuelLevel(vehicle, fuel + 0.0)
-		DecorSetFloat(vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(vehicle))
-	end
+    if type(fuel) == 'number' and fuel >= 0 and fuel <= 100 then
+        SetVehicleFuelLevel(vehicle, fuel + 0.0)
+	DecorSetFloat(vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(vehicle))
+    end
 end
 
 local function SpawnAirplane(licence)
