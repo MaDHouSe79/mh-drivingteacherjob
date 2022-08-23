@@ -1,6 +1,6 @@
 # A RP Driving Teacher Job for QBCore.
 
-## Included Free Mlo and Truck
+## Included Free Mlo Interior and Free Daf Truck
 
 ## How it works:
 - There are 11 licences you can give to players with this job.
