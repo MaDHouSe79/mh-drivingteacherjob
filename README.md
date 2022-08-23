@@ -37,6 +37,10 @@
 ## Read The README.md!!! 
 ![foto1](https://naskho.org/images/ReadPlease.gif)
 
+#### Add to `management_funds database table`
+```sql
+INSERT INTO `management_funds` (`job_name`, `amount`, `type`) VALUES ('drivingteacher', '0', 'boss');
+```
 
 #### Edit `qb-core\server\player.lua` around line 120 to this code:
 ```lua
