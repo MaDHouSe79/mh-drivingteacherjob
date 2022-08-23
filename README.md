@@ -15,7 +15,7 @@
 
 
 ## NOTE !!:
-- Edit `qb-smallresources/config.lua` and remove of set true to false for vehicles you don't want to be blacklisted
+- Edit `qb-smallresources/config.lua` and remove or set true to false for vehicles you don't want to be blacklisted
 - if you don't do this, the vehicle will spawn, but will also removeed after spawning, or it does not spawn at all.
 - So don't forget this part if you use the airplane or helikopter license. 
 - To use one of this vehicles in that list, than just set it to false restart the server, and your done.
