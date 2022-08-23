@@ -1,6 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
+author 'MaDHouSe'
 description 'qb-drivingteacherjob'
 version '1.0.0'
 
