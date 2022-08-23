@@ -303,9 +303,9 @@ end)
 #### Edit `qb-phone/html/js/lawyers.js`
 - to call a driving teacher (if this player is online)
 - you can change the colers in rgb()
-- 
 
-- add to `qb-phone/html/js/lawyers.js` around line 9/10
+
+## Add to `qb-phone/html/js/lawyers.js` around line 9/10
 ```js 
 var drivingteacher = [];
 ```
