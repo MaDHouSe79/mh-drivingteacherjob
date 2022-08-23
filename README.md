@@ -292,11 +292,17 @@ QBCore.Commands.Add('bill', 'Bill A Player', {{name = 'id', help = 'Player ID'},
 end)
 ```
 
+
+
 #### Edit qb-phone Option 2 `resources/[qb]/qb-phone/server.lua` around line 1055
 - You can add `or biller.PlayerData.job.name == 'drivingteacher'` 
 - to the job check if statement and add this to the end before `then`
--
-- example: `if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then`
+- example: 
+```lua
+if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then
+```
+
+
 
 
 
