@@ -64,7 +64,7 @@ PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
 ```
 
 #### Edit `qb-core\shared\main.lua`:
-- why? cause if people join the server and create a new charactert,
+- why? cause if people join the server and create a new character,
 - they get a driver_license, and we don't want that.
 ```lua
 QBShared.StarterItems = {
