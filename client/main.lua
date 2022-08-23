@@ -27,7 +27,7 @@ local function SpawnAirplane(licence)
     local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehicle = _vehicle
@@ -58,7 +58,7 @@ local function SpawnHelikoper(licence)
     local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehicle = _vehicle
@@ -89,7 +89,7 @@ local function SpawnBoat(licence)
     local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehicle = _vehicle
@@ -122,7 +122,7 @@ local function SpawnTruckAndTrailer(licence)
     local vehicleHeading
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(veh)
             local vehicle = veh
@@ -167,7 +167,7 @@ local function SpawnBusAndTrailer(licence)
     local vehicleHeading
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(veh)
             local vehicle = veh
@@ -218,7 +218,7 @@ local function SpawnBoatTrailer(licence)
     local trailerHeading
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehicle = _vehicle
@@ -278,7 +278,7 @@ local function SpawnTestVehicle(licence)
     local tmpSpawnPosition = vector3(coords.x + 3.0, coords.y + 1.0, coords.z)
     if not QBCore.Functions.IsSpawnPointClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-		return
+	    return
 	else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehicle = _vehicle
