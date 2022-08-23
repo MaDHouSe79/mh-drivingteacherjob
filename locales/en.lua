@@ -17,7 +17,7 @@ local Translations = {
 		['student_not_found'] = "No student found",
 		['no_info_found'] = "No driving test info found",
 		['granted_access_license'] = "Player with ID %{id} has been granted access to %{license} license",
-		['passed_for_license'] = "You passed your %{license} license"
+		['passed_for_license'] = "You passed your %{license} license",
 		['your_license_has_been_taken'] = "Your driver's license has been taken away by %{player}",
 		['license_has_been_taken'] = "Player with ID %{id} no longer has a license",
 	},
