@@ -17,7 +17,7 @@ local Translations = {
 		['student_not_found'] = "Geen leerling gevonden",
 		['no_info_found'] = "Geen rijexameninformatie gevonden",
 		['granted_access_license'] = "Speler met ID %{id} heeft toegang gekregen tot %{license} licentie",
-		['passed_for_license'] = "Je bent gelaagd voor %{license} licentie"
+		['passed_for_license'] = "Je bent gelaagd voor %{license} licentie",
 		['your_license_has_been_taken'] = "Uw rijbewijs is ingenomen door %{player}",
 		['license_has_been_taken'] = "Speler met ID %{id} heeft geen geldig licentie meer",
 	},
