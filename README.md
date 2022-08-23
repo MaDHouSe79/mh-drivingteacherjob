@@ -26,9 +26,8 @@
 - [qb-core](https://github.com/qbcore-framework/qb-core)
 - [qb-radialmenu](https://github.com/qbcore-framework/qb-radialmenu) 
 - [qb-smallresources](https://github.com/qbcore-framework/qb-smallresources)
-- [Driving School Interior](https://forum.cfx.re/t/mlo-driving-school-interior/1466079) (already included)
-- [Daf Truck](https://nl.gta5-mods.com/vehicles/truck-camion-daf-xf-euro-6) (already included)
-
+- [Driving School Interior](https://forum.cfx.re/t/mlo-driving-school-interior/1466079)
+- [Daf Truck](https://nl.gta5-mods.com/vehicles/truck-camion-daf-xf-euro-6) 
 
 
 ## Installation:
