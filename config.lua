@@ -1,3 +1,7 @@
+--[[ ===================================================== ]]--
+--[[        QBCore Driving Teacher Job by MaDHouSe         ]]--
+--[[ ===================================================== ]]--
+
 Config = {}
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
