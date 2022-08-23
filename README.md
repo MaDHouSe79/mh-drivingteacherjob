@@ -322,7 +322,7 @@ if (lawyer.typejob == "drivingteacher") {
 $(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
 if (drivingteacher.length > 0) {
     $.each(drivingteacher, function(i, lawyer10) {
-        var element = '<div class="lawyer-list" id="lawyerid1-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
+        var element = '<div class="lawyer-list" id="lawyerid10-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
         $(".lawyers-list").append(element);
         $("#lawyerid1-" + i).data('LawyerData', lawyer10);
     });
