@@ -3,6 +3,7 @@
 
 ## How it works:
 - There are 11 licences you can give to players with this job.
+- To bill a player for a licence use `/bill [id] [amount]`
 - you can also add some objects on the road as drive test obstacles, so the student can show his/her driving skills ;)  
 - when spawning a vehicle, you must go insite this vehicle drivers seat and use `/givekeys [id]`
 - with this you give the vehicle keys to the student so he/she can use the vehicle.
@@ -25,10 +26,11 @@
 - [qb-core](https://github.com/qbcore-framework/qb-core)
 - [qb-radialmenu](https://github.com/qbcore-framework/qb-radialmenu) 
 - [qb-smallresources](https://github.com/qbcore-framework/qb-smallresources)
+- [Driving School Interior](https://forum.cfx.re/t/mlo-driving-school-interior/1466079)
 
 
 ## Installation:
-- Put `qb-drivingteacherjob` it to `resources/[qb]` directory.
+- Put `qb-drivingteacherjob` in to `resources/[qb]` directory.
 - After you done with the instructions below, you can restart the server.
 
 
@@ -36,47 +38,7 @@
 ![foto1](https://naskho.org/images/ReadPlease.gif)
 
 
-#### EDIT `resources/[qb]/qb-cityhall/config.lua` around line 38
-- to disable the Driving School Blip
-- set this to `showBlip = false,`
-
-#### EDIT `resources/[qb]/qb-cityhall/config.lua` around line 72
-- to disable the Driving School
-- set this to `drivingschool = false`
-
-#### NOTE Driving School Ped (`resources/[qb]/qb-cityhall/config.lua`)
-- if you want to remove this Ped just change the `Config.Peds` to this code below
-```lua
-Config.Peds = {
-    -- Cityhall Ped
-    {
-        model = 'a_m_m_hasjew_01',
-        coords = vec4(-262.79, -964.18, 30.22, 181.71),
-        scenario = 'WORLD_HUMAN_STAND_MOBILE',
-        cityhall = true,
-        zoneOptions = { -- Used for when UseTarget is false
-            length = 3.0,
-            width = 3.0,
-            debugPoly = false
-        }
-    },
-    -- Driving School Ped
-    --[[
-    {
-        model = 'a_m_m_eastsa_02',
-        coords = vec4(240.91, -1379.2, 32.74, 138.96),
-        scenario = 'WORLD_HUMAN_STAND_MOBILE',
-        drivingschool = false,
-        zoneOptions = { -- Used for when UseTarget is false
-            length = 3.0,
-            width = 3.0
-        }
-    }
-    ]]--
-}
-```
-
-#### Edit `resources/[qb]/qb-core\server\player.lua` around line 120 to this code:
+#### Edit `qb-core\server\player.lua` around line 120 to this code:
 ```lua
 PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
     ['N'] = false, -- theory
@@ -96,7 +58,7 @@ PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
 }
 ```
 
-#### Edit `resources/[qb]/qb-core\shared\main.lua`:
+#### Edit `qb-core\shared\main.lua`:
 - why? cause if people join the server and create a new charactert,
 - they get a driver_license, and we don't want that.
 ```lua
@@ -108,18 +70,17 @@ QBShared.StarterItems = {
 ```
 
 #### Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenus`:
--- this is the bossmenu location
+-- This is the bossmenu location
 ```lua
 ['drivingteacher'] = {
-    vector3(0.0, 0.0, 0.0) -- add you own coords here (Bossmenu)
-}
+    vector3(215.24, -1401.76, 30.58) --  (Bossmenu)
+},
 ```
 #### Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenuZones`:
 - This is the bossmenu zone
-- Change the vector3 to your own coords and don't forget to add heading.
 ```lua
 ['drivingteacher'] = {
-    { coords = vector3(0.0, 0.0, 0.0), length = 1.15, width = 2.6, heading = 0.0, minZ = 43.59, maxZ = 44.99 },
+    { coords = vector3(215.24, -1401.76, 30.58), length = 1.15, width = 2.6, heading = 307.07, minZ = 43.59, maxZ = 44.99 },
 },
 ```
 
@@ -290,6 +251,45 @@ QBShared.StarterItems = {
     },
 },
 ```
+
+#### Edit qb-phone Option 1 `resources/[qb]/qb-phone/server.lua` around line 1055
+- Change the Command bill with this code below
+```lua
+QBCore.Commands.Add('bill', 'Bill A Player', {{name = 'id', help = 'Player ID'}, {name = 'amount', help = 'Fine Amount'}}, false, function(source, args)
+    local biller = QBCore.Functions.GetPlayer(source)
+    local billed = QBCore.Functions.GetPlayer(tonumber(args[1]))
+    local amount = tonumber(args[2])
+    if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then
+        if billed ~= nil then
+            if biller.PlayerData.citizenid ~= billed.PlayerData.citizenid then
+                if amount and amount > 0 then
+                    MySQL.insert(
+                        'INSERT INTO phone_invoices (citizenid, amount, society, sender, sendercitizenid) VALUES (?, ?, ?, ?, ?)',
+                        {billed.PlayerData.citizenid, amount, biller.PlayerData.job.name,
+                         biller.PlayerData.charinfo.firstname, biller.PlayerData.citizenid})
+                    TriggerClientEvent('qb-phone:RefreshPhone', billed.PlayerData.source)
+                    TriggerClientEvent('QBCore:Notify', source, 'Invoice Successfully Sent', 'success')
+                    TriggerClientEvent('QBCore:Notify', billed.PlayerData.source, 'New Invoice Received')
+                else
+                    TriggerClientEvent('QBCore:Notify', source, 'Must Be A Valid Amount Above 0', 'error')
+                end
+            else
+                TriggerClientEvent('QBCore:Notify', source, 'You Cannot Bill Yourself', 'error')
+            end
+        else
+            TriggerClientEvent('QBCore:Notify', source, 'Player Not Online', 'error')
+        end
+    else
+        TriggerClientEvent('QBCore:Notify', source, 'No Access', 'error')
+    end
+end)
+```
+
+#### Edit qb-phone Option 2 `resources/[qb]/qb-phone/server.lua` around line 1055
+- You can add `or biller.PlayerData.job.name == 'drivingteacher'` 
+- to the job check if statement and add this to the end before `then`
+-
+- example: `if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then`
 
 ## 🐞 Any bugs let my know.
 - Have fun with this awesome qb-drivingteacherjob mod 😎👍
