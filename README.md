@@ -124,6 +124,7 @@ QBShared.StarterItems = {
 },
 ```
 
+
 #### Add to `resources/[qb]/qb-radialmenu/config.lua` inside the `Config.JobInteractions`:
 ```lua
 ["drivingteacher"] = {
@@ -259,6 +260,7 @@ QBShared.StarterItems = {
 },
 ```
 
+
 #### Edit qb-phone Option 1 `resources/[qb]/qb-phone/server.lua` around line 1055
 - Change the Command bill with this code below
 ```lua
@@ -292,6 +294,7 @@ QBCore.Commands.Add('bill', 'Bill A Player', {{name = 'id', help = 'Player ID'},
 end)
 ```
 
+
 #### Edit qb-phone Option 2 `resources/[qb]/qb-phone/server.lua` around line 1055
 - You can add `or biller.PlayerData.job.name == 'drivingteacher'` 
 - to the job check if statement and add this to the end before `then`
@@ -300,15 +303,18 @@ end)
 
 
 
+
 #### Edit `qb-phone/html/js/lawyers.js`
 - to call a driving teacher (if this player is online)
 - you can change the colers in rgb()
+- 
 
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 9/10
 ```js 
 var drivingteacher = [];
 ```
+
 
 ## add to `qb-phone/html/js/lawyers.js` around line 36
 ```js
@@ -317,12 +323,13 @@ if (lawyer.typejob == "drivingteacher") {
 }
 ```
 
+
 ## Add to `qb-phone/html/js/lawyers.js` around line 134
 ```js
 $(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
 if (drivingteacher.length > 0) {
     $.each(drivingteacher, function(i, lawyer10) {
-        var element = '<div class="lawyer-list" id="lawyerid10-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
+        var element = '<div class="lawyer-list" id="lawyerid1-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
         $(".lawyers-list").append(element);
         $("#lawyerid1-" + i).data('LawyerData', lawyer10);
     });
@@ -331,6 +338,7 @@ if (drivingteacher.length > 0) {
     $(".lawyers-list").append(element);
 }
 ```
+
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 176
 ```js
