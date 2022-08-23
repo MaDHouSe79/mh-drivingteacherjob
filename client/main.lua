@@ -145,7 +145,7 @@ local function SpawnTruckAndTrailer(licence)
             SetVehicleBodyHealth(vehicle, 1000.0)
             TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
         end, tmpSpawnPosition, true)
-		
+	Wait(100)
         if Config.Trailers.CE ~= '' then
             QBCore.Functions.SpawnVehicle(Config.Trailers.CE, function(loading)
                 SetVehicleNumberPlateText(loading, 'B_LR_' .. string.format('%06d', math.random(1, 99)))
@@ -191,7 +191,7 @@ local function SpawnBusAndTrailer(licence)
             SetVehicleBodyHealth(vehicle, 1000.0)
             TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
         end, tmpSpawnPosition, true)
-
+        Wait(100)
         if Config.Trailers.DE ~= '' then
             QBCore.Functions.SpawnVehicle(Config.Trailers.DE, function(loading)
                 SetVehicleNumberPlateText(loading, 'B_LR_' .. string.format('%06d', math.random(1, 99)))
