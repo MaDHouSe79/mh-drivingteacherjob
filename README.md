@@ -13,8 +13,7 @@
 - The `N licence` this is only when a player does not have the N licence so you know you this player is a starter)
 - To take a the licence from a player use /take-licence [id] (this player is no longer licensed) Ex: `/take-licence 1`
 
-## VIDEO
-- [youtube](https://www.youtube.com/watch?v=b_7tpWBxBZ0)
+
 
 ## NOTE !!:
 - Edit `qb-smallresources/config.lua` and remove or set true to false for vehicles you don't want to be blacklisted
@@ -28,7 +27,8 @@
 - [qb-radialmenu](https://github.com/qbcore-framework/qb-radialmenu) 
 - [qb-smallresources](https://github.com/qbcore-framework/qb-smallresources)
 - [Driving School Interior](https://forum.cfx.re/t/mlo-driving-school-interior/1466079)
-- [Daf Truck](https://nl.gta5-mods.com/vehicles/truck-camion-daf-xf-euro-6) 
+- [Daf Truck](https://nl.gta5-mods.com/vehicles/truck-camion-daf-xf-euro-6)
+
 
 
 ## Installation:
@@ -292,17 +292,11 @@ QBCore.Commands.Add('bill', 'Bill A Player', {{name = 'id', help = 'Player ID'},
 end)
 ```
 
-
-
 #### Edit qb-phone Option 2 `resources/[qb]/qb-phone/server.lua` around line 1055
 - You can add `or biller.PlayerData.job.name == 'drivingteacher'` 
 - to the job check if statement and add this to the end before `then`
-- example: 
-```lua
-if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then
-```
-
-
+-
+- example: `if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then`
 
 
 
@@ -316,14 +310,14 @@ if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambu
 var drivingteacher = [];
 ```
 
-- add to `qb-phone/html/js/lawyers.js` around line 36
+## add to `qb-phone/html/js/lawyers.js` around line 36
 ```js
 if (lawyer.typejob == "drivingteacher") {
     drivingteacher.push(lawyer);
 }
 ```
 
-- add to `qb-phone/html/js/lawyers.js` around line 134
+## Add to `qb-phone/html/js/lawyers.js` around line 134
 ```js
 $(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
 if (drivingteacher.length > 0) {
@@ -338,12 +332,13 @@ if (drivingteacher.length > 0) {
 }
 ```
 
-- add to `qb-phone/html/js/lawyers.js` around line 176
+## Add to `qb-phone/html/js/lawyers.js` around line 176
 ```js
 $(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
 var element = '<div class="lawyer-list"><div class="no-lawyers">There are no driving teachers.</div></div>'
 $(".lawyers-list").append(element);
 ```
+
 
 ## 🐞 Any bugs let my know.
 - Have fun with this awesome qb-drivingteacherjob mod 😎👍
