@@ -84,7 +84,7 @@ local function LicenseInfo(target)
 	return info
 end
 
-QBCore.Commands.Add(Config.Command['add'], "Een rijbewijs geven aan een speler", {{"id", "ID"},{"type", "Type (AM/A/B/BE/C/CE/D/DE/P)"}}, true, function(source, args)
+QBCore.Commands.Add(Config.Command['add'], Lang:t('command.add_help'), {{"id", "ID"},{"type", Lang:t('menu.licence_types')}}, true, function(source, args)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 	if Player.PlayerData.job.name == 'drivingteacher' then
@@ -95,22 +95,22 @@ QBCore.Commands.Add(Config.Command['add'], "Een rijbewijs geven aan een speler",
 			if SearchedPlayer then
 				student.PlayerData.metadata["licences"][license] = true
 				student.Functions.SetMetaData("licences", student.PlayerData.metadata["licences"])
-				TriggerClientEvent('QBCore:Notify', studentId, "Je bent geslaagd voor je rijbewijs ("..license..")!", "success", 5000)
-				TriggerClientEvent('QBCore:Notify', source, ("Speler met ID %s heeft toegang gekregen tot een rijbewijs ("..license..")"):format(studentId), "success", 5000)
+				TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.passed_for_license',license = license), "success", 5000)
+				TriggerClientEvent('QBCore:Notify', source,  Lang:t('notify.granted_access_license', id = studentId, license = license), "success", 5000)
 				student.Functions.RemoveItem('driver_license', 1)
 				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
 				student.Functions.AddItem('driver_license', 1, nil, LicenseInfo(student))
 				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], 'add')
 			end
 		else
-			TriggerClientEvent('QBCore:Notify', source, "Je hebt geen geldig ID ingevoerd..", "error", 5000)
+			TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.invalid_id'), "error", 5000)
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', source, "Je bent geen rij instructor..", "error", 5000)
+		TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.not_a_instructor'), "error", 5000)
 	end
 end, 'user')
 
-QBCore.Commands.Add(Config.Command['remove'], "Een rijbewijs innemen", {{"id", "ID"}}, true, function(source, args)
+QBCore.Commands.Add(Config.Command['remove'], Lang:t('command.remove_help'), {{"id", "ID"}}, true, function(source, args)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 	if Player.PlayerData.job.name == 'drivingteacher' then
@@ -139,14 +139,14 @@ QBCore.Commands.Add(Config.Command['remove'], "Een rijbewijs innemen", {{"id", "
 				student.Functions.RemoveItem('driver_license', 1, nil)
 
 				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
-
-				TriggerClientEvent('QBCore:Notify', studentId, "Je rijbewijs is afgenomen door "..Player.PlayerData.charinfo.firstname .." "..Player.PlayerData.charinfo.lastname, "success", 5000)
-				TriggerClientEvent('QBCore:Notify', source, ("Speler met ID %s heeft geen rijbewijs meer"):format(studentId), "success", 5000)
+				TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.your_license_has_been_taken', player = Player.PlayerData.charinfo.firstname .." "..Player.PlayerData.charinfo.lastname), "success", 5000)
+				TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.license_has_been_taken', id = studentId), "success", 5000)
 			end
 		else
-			TriggerClientEvent('QBCore:Notify', source, "Je hebt geen geldig ID ingevoerd..", "error", 5000)
+			TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.invalid_id'), "error", 5000)
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', source, "Je bent geen rij instructor..", "error", 5000)
+		TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.not_a_instructor'), "error", 5000)
 	end
 end, 'user')
+
