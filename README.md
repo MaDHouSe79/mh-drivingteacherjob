@@ -1,9 +1,4 @@
 # A RP Driving Teacher Job for QBCore.
-- Included a free Mlo Interior and a free Daf Truck
-
-
-## Video
-- [Video](https://www.youtube.com/watch?v=b_7tpWBxBZ0)
 
 
 ## How it works:
@@ -27,14 +22,14 @@
 - To use one of this vehicles in that list, than just set it to false restart the server, and your done.
 
 
-
-
 ## Dependencies:
 - [qb-core](https://github.com/qbcore-framework/qb-core)
 - [qb-radialmenu](https://github.com/qbcore-framework/qb-radialmenu) 
 - [qb-smallresources](https://github.com/qbcore-framework/qb-smallresources)
 - [Driving School Interior](https://forum.cfx.re/t/mlo-driving-school-interior/1466079)
 - [Daf Truck](https://nl.gta5-mods.com/vehicles/truck-camion-daf-xf-euro-6)
+
+
 
 ## Installation:
 - Put `qb-drivingteacherjob` in to `resources/[qb]` directory.
@@ -62,16 +57,16 @@ PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
     ['CE'] = false, -- truck + trailer
     ['D'] = false, -- bus
     ['DE'] = false, -- bus + trailer
-    ['P'] = false, -- plane
+    ['P'] = false, -- plane or heli pilot
     ['T'] = false, -- boat
-    ['H'] = false, -- helikopter
+    ['H'] = false, -- Helikopter
     ['business'] = false,
     ['weapon'] = false
 }
 ```
 
 #### Edit `qb-core\shared\main.lua`:
-- why? cause if people join the server and create a new character,
+- why? cause if people join the server and create a new charactert,
 - they get a driver_license, and we don't want that.
 ```lua
 QBShared.StarterItems = {
@@ -122,7 +117,7 @@ QBShared.StarterItems = {
         },
         ['4'] = {
             name = 'Boss',
-            isboss = true,
+		    isboss = true,
             payment = 1000
         },
     },
@@ -302,6 +297,47 @@ end)
 - to the job check if statement and add this to the end before `then`
 -
 - example: `if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then`
+
+
+
+#### Edit `qb-phone/html/js/lawyers.js`
+- to call a driving teacher (if this player is online)
+- you can change the colers in rgb()
+- 
+
+- add to `qb-phone/html/js/lawyers.js` around line 9/10
+```js 
+var drivingteacher = [];
+```
+
+- add to `qb-phone/html/js/lawyers.js` around line 36
+```js
+if (lawyer.typejob == "drivingteacher") {
+    drivingteacher.push(lawyer);
+}
+```
+
+- add to `qb-phone/html/js/lawyers.js` around line 134
+```js
+$(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
+if (drivingteacher.length > 0) {
+    $.each(drivingteacher, function(i, lawyer10) {
+        var element = '<div class="lawyer-list" id="lawyerid1-' + i + '"> <div class="lawyer-list-firstletter" style="background-color: #0d1218c0;">' + (lawyer10.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer10.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
+        $(".lawyers-list").append(element);
+        $("#lawyerid1-" + i).data('LawyerData', lawyer10);
+    });
+} else {
+    var element = '<div class="lawyer-list"><div class="no-lawyers">There are no driving teachers online.</div></div>'
+    $(".lawyers-list").append(element);
+}
+```
+
+- add to `qb-phone/html/js/lawyers.js` around line 176
+```js
+$(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding:1.0256410256410255vh; color:#fff; margin-top:0; width:100%; display:block; background-color: rgb(155, 15, 120);">Driving Teacher (' + drivingteacher.length + ')</h1>');
+var element = '<div class="lawyer-list"><div class="no-lawyers">There are no driving teachers.</div></div>'
+$(".lawyers-list").append(element);
+```
 
 ## 🐞 Any bugs let my know.
 - Have fun with this awesome qb-drivingteacherjob mod 😎👍
