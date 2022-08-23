@@ -91,12 +91,12 @@ QBCore.Commands.Add(Config.Command['add'], Lang:t('command.add_help'), {{"id", "
 		if args[1] and tonumber(args[1]) >= 1 then
 			local studentId = tonumber(args[1])
 			local student = QBCore.Functions.GetPlayer(studentId)
-			local _license = tostring(args[2])
+			local license = tostring(args[2])
 			if SearchedPlayer then
 				student.PlayerData.metadata["licences"][license] = true
 				student.Functions.SetMetaData("licences", student.PlayerData.metadata["licences"])
-			TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.passed_for_license', {license = _license}), "success", 5000)
-				TriggerClientEvent('QBCore:Notify', source,  Lang:t('notify.granted_access_license', {id = studentId, license = _license}), "success", 5000)
+			TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.passed_for_license', {license = license}), "success", 5000)
+				TriggerClientEvent('QBCore:Notify', source,  Lang:t('notify.granted_access_license', {id = studentId, license = license}), "success", 5000)
 				student.Functions.RemoveItem('driver_license', 1)
 				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
 				student.Functions.AddItem('driver_license', 1, nil, LicenseInfo(student))
