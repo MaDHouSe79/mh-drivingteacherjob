@@ -1,3 +1,7 @@
+--[[ ===================================================== ]]--
+--[[        QBCore Driving Teacher Job by MaDHouSe         ]]--
+--[[ ===================================================== ]]--
+
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 local PlayerJob = {}
