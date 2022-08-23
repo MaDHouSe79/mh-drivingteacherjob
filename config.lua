@@ -75,12 +75,12 @@ Config.VehicleModels = {
     AM = 'faggio',  -- shooter
     A  = 'sanchez', -- motor
     B  = 'sadler',  -- car
-    BE = 'sadler',	-- car plus
+    BE = 'sadler',  -- car plus
     C  = 'daf',     -- truck
     CE = 'daf',     -- truck plus
     D  = 'bus',     -- bus 
     DE = 'bus',     -- bus plus
-    P  = 'luxor2',  -- plane
-    T  = 'speeder', -- boat
-    H  = 'frogger', -- Helikopter
+    P  = 'luxor2',  -- plane (cont forget to Edit qb-smallresources/config.lua)
+    T  = 'speeder', -- boat (cont forget to Edit qb-smallresources/config.lua)
+    H  = 'frogger', -- Helikopter (cont forget to Edit qb-smallresources/config.lua)
 }
