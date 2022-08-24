@@ -117,7 +117,7 @@ QBShared.StarterItems = {
         },
         ['4'] = {
             name = 'Boss',
-		    isboss = true,
+            isboss = true,
             payment = 1000
         },
     },
