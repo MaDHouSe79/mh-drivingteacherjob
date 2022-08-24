@@ -15,7 +15,7 @@ Config.Command = {
 Config.Locations = {
 
     ['duty'] = {
-	    [0] = vector4(200.66, -1388.16, 30.58, 230.81),
+	[0] = vector4(200.66, -1388.16, 30.58, 230.81),
     },
 
     ["stations"] = {
