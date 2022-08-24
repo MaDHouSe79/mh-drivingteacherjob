@@ -20,7 +20,7 @@ Config.Locations = {
 
     ["stations"] = {
         [1] = {
-	        label = "DriveSchool Het Klungeltje", 
+	    label = "DriveSchool Het Klungeltje", 
             coords = vector4(218.03, -1391.48, 30.59, 141.9),
             heading = 139.21,
             blipSprite = 498,
