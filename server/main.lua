@@ -92,7 +92,7 @@ QBCore.Commands.Add(Config.Command['add'], Lang:t('command.add_help'), {{"id", "
 			local studentId = tonumber(args[1])
 			local student = QBCore.Functions.GetPlayer(studentId)
 			local license = tostring(args[2])
-			if SearchedPlayer then
+			if student then
 				student.PlayerData.metadata["licences"][license] = true
 				student.Functions.SetMetaData("licences", student.PlayerData.metadata["licences"])
 			TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.passed_for_license', {license = license}), "success", 5000)
