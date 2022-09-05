@@ -87,7 +87,7 @@ end
 QBCore.Commands.Add(Config.Command['add'], Lang:t('command.add_help'), {{"id", "ID"},{"type", Lang:t('menu.licence_types')}}, true, function(source, args)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.PlayerData.job.name == 'drivingteacher' then
+	if Player.PlayerData.job.name == 'drivingteacher' or Player.PlayerData.job.name == 'police' then
 		if args[1] and tonumber(args[1]) >= 1 then
 			local studentId = tonumber(args[1])
 			local student = QBCore.Functions.GetPlayer(studentId)
@@ -113,7 +113,7 @@ end, 'user')
 QBCore.Commands.Add(Config.Command['remove'], Lang:t('command.remove_help'), {{"id", "ID"}}, true, function(source, args)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	if Player.PlayerData.job.name == 'drivingteacher' then
+	if Player.PlayerData.job.name == 'drivingteacher' or Player.PlayerData.job.name == 'police' then
 		if args[1] and tonumber(args[1]) >= 1 then
 			local studentId = tonumber(args[1])
 			local student = QBCore.Functions.GetPlayer(studentId)
