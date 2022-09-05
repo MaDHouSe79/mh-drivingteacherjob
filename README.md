@@ -10,7 +10,8 @@
 - When a student passes the exam, use `/give-licence [id] [N/A/AM/B/BE/C/CE/D/DE/P/T/H]` Ex: `/give-licence 1 BE`
 - The fist licence you must always give the licence N this is the theory. 
 - The `N licence` this is only when a player does not have the N licence so you know you this player is a starter)
-- To take a the licence from a player use /take-licence [id] (this player is no longer licensed) Ex: `/take-licence 1` (the police can use this command to)
+- To take a the licence from a player use /take-licence [id] (this player is no longer licensed) Ex: `/take-licence 1` 
+- The police can use this commands `/give-licence 1 N` and  `/take-licence 1` 
 
 
 
