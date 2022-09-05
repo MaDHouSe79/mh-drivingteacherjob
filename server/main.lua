@@ -43,7 +43,7 @@ local function CreateLicense(target)
 
 	if target.PlayerData.metadata['licences'].B and target.PlayerData.metadata['licences'].D then 
 		local d = "/D"
-		if Target.PlayerData.metadata['licences'].DE then d = "/DE" end
+		if target.PlayerData.metadata['licences'].DE then d = "/DE" end
 		license = license .. d
 	end
 
