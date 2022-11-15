@@ -130,6 +130,21 @@ QBShared.StarterItems = {
 ```lua
 ["drivingteacher"] = {
     {
+        id = 'playerlicinceoptions2',
+        title = 'Licince Options',
+        icon = 'plus',
+        items = {
+            {
+                id = 'givelicince1',
+                title = 'Give',
+                icon = 'plus',
+                type = 'client',
+                event = 'mh-drivingteacherjob:client:giveLicinceMenu',
+                shouldClose = true
+            },
+        }
+    },
+    {
         id = 'instructorobjects',
         title = 'Objects',
         icon = 'road',
