@@ -84,6 +84,24 @@ local function LicenseInfo(target)
 	return info
 end
 
+
+local function GetOnlinePlayers()
+    local sources = {}	
+    for k, id in pairs(QBCore.Functions.GetPlayers()) do
+		local target = QBCore.Functions.GetPlayer(id)
+		local info = {
+			source = target.PlayerData.source,
+			fullname = target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname,
+		}
+        sources[#sources+1] = info
+    end
+    return sources
+end
+
+QBCore.Functions.CreateCallback("mh-drivingteacherjob:server:GetOnlinePlayers", function(source, cb)
+	cb(GetOnlinePlayers())
+end)
+
 QBCore.Commands.Add(Config.Command['add'], Lang:t('command.add_help'), {{"id", "ID"},{"type", Lang:t('menu.licence_types')}}, true, function(source, args)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
@@ -149,3 +167,58 @@ QBCore.Commands.Add(Config.Command['remove'], Lang:t('command.remove_help'), {{"
 		TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.not_a_instructor'), "error", 5000)
 	end
 end, 'user')
+
+RegisterServerEvent('mh-drivingteacherjob:server:givelicince', function(id, license)
+	local src = source
+	if id and tonumber(id) >= 1 then
+		local studentID = tonumber(id)
+		local student = QBCore.Functions.GetPlayer(studentID)
+		if student then
+			student.PlayerData.metadata["licences"][license] = true
+			student.Functions.SetMetaData("licences", student.PlayerData.metadata["licences"])
+			TriggerClientEvent('QBCore:Notify', studentID, Lang:t('notify.passed_for_license', {license = license}), "success", 5000)
+			TriggerClientEvent('QBCore:Notify', src,  Lang:t('notify.granted_access_license', {id = studentID, license = license}), "success", 5000)
+			student.Functions.RemoveItem('driver_license', 1)
+			TriggerClientEvent('inventory:client:ItemBox', studentID, QBCore.Shared.Items['driver_license'], "remove")
+			student.Functions.AddItem('driver_license', 1, nil, LicenseInfo(student))
+			TriggerClientEvent('inventory:client:ItemBox', studentID, QBCore.Shared.Items['driver_license'], 'add')
+		end
+	end
+end)
+
+RegisterServerEvent('mh-drivingteacherjob:server:takelicince', function(id)
+	local src = source
+	local Player = QBCore.Functions.GetPlayer(src)
+	if id and tonumber(id) >= 1 then
+		local targetID = tonumber(id)
+		local target = QBCore.Functions.GetPlayer(targetID)
+		if target then
+			local licenses = {
+				['N'] = false,
+				['AM'] = false,
+				['A'] = false,
+				['B'] = false,
+				['BE'] = false,
+				['C'] = false,
+				['CE'] = false,
+				['D'] = false,
+				['DE'] = false,
+				['V'] = false,
+				['P'] = false,
+				['H'] = false,
+				['R'] = false,
+				['AMB'] = false,
+				['POL'] = false,
+				['business'] = target.PlayerData.metadata['licences'].business,
+				['weapon'] = target.PlayerData.metadata['licences'].weapon
+			}
+			target.Functions.SetMetaData('licences', licenses)
+			target.Functions.RemoveItem('driver_license', 1)
+			TriggerClientEvent('inventory:client:ItemBox', targetID, QBCore.Shared.Items['driver_license'], "remove")
+			TriggerClientEvent('QBCore:Notify', targetID, Lang:t('notify.your_license_has_been_taken', {player = Player.PlayerData.charinfo.firstname .." "..Player.PlayerData.charinfo.lastname}), "success", 5000)
+			TriggerClientEvent('QBCore:Notify', src, Lang:t('notify.license_has_been_taken', {id = targetID}), "success", 5000)
+		end
+	else
+		TriggerClientEvent('QBCore:Notify', src, Lang:t('notify.invalid_id'), "error", 5000)
+	end
+end)
