@@ -367,6 +367,88 @@ RegisterNetEvent('qb-drivingteacherjob:client:removeKeys', function(plate)
     TriggerEvent(Config.RemoveKeyScriptTrigger, plate)		
 end)
 
+RegisterNetEvent('mh-drivingteacherjob:client:giveLicinceMenu', function()
+    local playerlist = {}
+    QBCore.Functions.TriggerCallback('mh-drivingteacherjob:server:GetOnlinePlayers', function(online)
+        for key, v in pairs(online) do
+            playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname}
+        end
+        local menu = exports["qb-input"]:ShowInput({
+            header = Lang:t('menu.main_give_header'),
+            submitText = Lang:t('menu.give_help'),
+            inputs = {
+                {
+                    text = Lang:t('licence.select_player'),
+                    name = "id",
+                    type = "select",
+                    options = playerlist,
+                    isRequired = true
+                },
+                {
+                    text = Lang:t('licence.select_licence'),
+                    name = "licence",
+                    type = "select",
+                    options = {
+                        { value = "N", text = Lang:t('licence.licence_n') },
+                        { value = "AM", text = Lang:t('licence.licence_am')},
+                        { value = "A", text = Lang:t('licence.licence_a') },
+                        { value = "B", text = Lang:t('licence.licence_b') },
+                        { value = "BE", text = Lang:t('licence.licence_be') },
+                        { value = "C", text = Lang:t('licence.licence_c') },
+                        { value = "CE", text = Lang:t('licence.licence_ce') },
+                        { value = "D", text = Lang:t('licence.licence_d') },
+                        { value = "DE", text = Lang:t('licence.licence_de') },
+                        { value = "T", text = Lang:t('licence.licence_t') },
+                        { value = "H", text = Lang:t('licence.licence_h') },
+                        { value = "P", text = Lang:t('licence.licence_p') },
+                        { value = "R", text = Lang:t('licence.licence_r') },
+                        { value = "AMB", text = Lang:t('licence.licence_amb') },
+                        { value = "POL", text = Lang:t('licence.licence_pol') },
+                    },
+                    isRequired = true
+                }
+            }
+        })
+        if menu then
+            if not menu.id and not menu.licence then
+                return
+            else
+                TriggerServerEvent('mh-drivingteacherjob:server:givelicince', tonumber(menu.id), tostring(menu.licence))
+            end
+        end
+    end)
+end)
+
+RegisterNetEvent('mh-drivingteacherjob:client:takeLicinceMenu', function()
+    local playerlist = {}
+    QBCore.Functions.TriggerCallback('mh-drivingteacherjob:server:GetOnlinePlayers', function(online)
+        for key, v in pairs(online) do
+            playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname}
+        end
+
+        local menu = exports["qb-input"]:ShowInput({
+            header = Lang:t('menu.main_take_header'),
+            submitText = Lang:t('menu.remove_help'),
+            inputs = {
+                {
+                    text = Lang:t('licence.select_player'),
+                    name = "id",
+                    type = "select",
+                    options = playerlist,
+                    isRequired = true
+                },
+            }
+        })
+        if menu then
+            if not menu.id then
+                return
+            else
+                TriggerServerEvent('mh-drivingteacherjob:server:takelicince', tonumber(menu.id))
+            end
+        end
+    end)
+end)
+
 -- Threads
 CreateThread(function()
     for _, station in pairs(Config.Locations["stations"]) do
