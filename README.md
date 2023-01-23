@@ -1,5 +1,5 @@
 # A RP Driving Teacher Job for QBCore.
-- There are 11 licences you can give to players with this job.
+- There are 15 licences you can give to players with this job.
 
 ## How it works:
 - To bill a player for a licence use `/bill [id] [amount]`
