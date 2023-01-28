@@ -6,7 +6,7 @@ Config = {}
 
 Config.debugPoly = false
 
-Config.UseMHVehicleKeyItem = true
+Config.UseMHVehicleKeyItem = false
 
 
 
