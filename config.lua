@@ -5,11 +5,7 @@
 Config = {}
 
 Config.debugPoly = false
-
 Config.UseMHVehicleKeyItem = false
-
-
-
 Config.GiveKeyScriptTrigger = "qb-vehiclekeys:server:AcquireVehicleKeys"
 Config.RemoveKeyScriptTrigger = "qb-vehiclekeys:client:RemoveKeys"
 
@@ -18,9 +14,8 @@ Config.Command = {
     ['remove'] = "take-licence",
 }
 
-
 Config.Garages = {
-    -- job garage
+    -- school garage
     ['school1'] = {
         [0] = {
             name = "Drive School Garage",                              -- blip name
