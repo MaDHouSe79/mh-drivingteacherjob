@@ -2,7 +2,7 @@
 - There are 15 licences you can give to players with this job.
 
 ## Read UPDATE.MD 
-- if there is a update read the update.md, maby youneed to change something.
+- if there is a update read the update.md, maby you need to change something.
 
 ## How it works:
 - To bill a player for a licence use `/bill [id] [amount]`
