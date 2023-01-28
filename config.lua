@@ -12,6 +12,27 @@ Config.Command = {
     ['remove'] = "take-licence",
 }
 
+Config.Garages = {
+    -- job garage
+    ['school1'] = {
+        [0] =  {
+            name = "Drive School Garage",                              -- blip name
+            job = "drivingteacher",                                    -- job
+            showBlip = true,                                           -- show blip
+            blip  = 50,                                                -- blip icon
+            coords = {x = 250.5708, y = -1405.9473, z = 30.5875, h = 314.9212}, -- map blip
+            zones = {
+                vector2(255.04981994628, -1394.9913330078),
+                vector2(261.9594116211, -1400.4221191406),
+                vector2(249.77505493164, -1414.904663086),
+                vector2(242.17727661132, -1408.4309082032),
+            },
+            minZ = 27.587503433228,
+            maxZ = 33.587503433228,
+        }, -- you can add jog garage more here
+    },-- you can add more job garages here
+}
+
 Config.Locations = {
 
     ['duty'] = {
@@ -20,7 +41,7 @@ Config.Locations = {
 
     ["stations"] = {
         [1] = {
-	    label = "DriveSchool Het Klungeltje", 
+	    label = "Drive School Het Klungeltje", 
             coords = vector4(218.03, -1391.48, 30.59, 141.9),
             heading = 139.21,
             blipSprite = 498,
@@ -29,11 +50,20 @@ Config.Locations = {
             showBlip = true,
         },
         [2] = {
-            label = "DriveSchool Theorie Examen",
+            label = "Drive School Theorie Examen",
             coords = vector4(208.83, -1382.73, 30.58, 132.58),
             heading = 202.24,
             blipSprite = 525,
             blipColour = 31,
+            blipScale = 0.8,
+            showBlip = true,
+        },
+	[3] = {
+	    label = "Drive School Garage", 
+            coords = vector4(250.5708, -1405.9473, 30.5875, 314.9212),
+            heading = 44.4795,
+            blipSprite = 50,
+            blipColour = 2,
             blipScale = 0.8,
             showBlip = true,
         },
