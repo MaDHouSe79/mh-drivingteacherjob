@@ -5,16 +5,14 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 local zones = {}
+local blips = {}
 local garageCombo = {}
 local garageSpawn = nil
-local currentTestDriving = false
-local currentStudentID = nil
-local currentDriveTest = nil
 local currentVehicle = nil
 local currenVehicleName = nil
 local currentPlate = nil
 local garageType = nil
-local inDuty
+local isInside = false
 
 local function SetFuel(vehicle, fuel)
     if type(fuel) == 'number' and fuel >= 0 and fuel <= 100 then
@@ -46,7 +44,7 @@ local function SpawnAirplane(licence)
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-	return
+	    return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
@@ -314,17 +312,102 @@ local function SpawnTestVehicle(licence)
     end
 end
 
+local function DeleteGarages()
+    if zones ~= nil then
+        for k, zone in pairs(zones) do
+            if zone then zone:destroy() end
+        end
+    end
+end
+
+local function LoadGarages()
+    for k, v in pairs(Config.Garages) do
+        for _, garage in pairs(v) do
+            zones[#zones + 1] = PolyZone:Create(garage.zones, {
+                name = garage.name,
+                minZ = garage.minZ,
+                maxZ = garage.maxZ,
+                debugPoly = garage.debugPoly,
+            })
+        end
+    end
+    garageCombo = ComboZone:Create(zones, { name = "garagecombo001", debugPoly = false })
+end
+
+local function DeleteAllBlips()
+    if blips ~= nil then
+        for _, v in pairs(blips) do
+            if DoesBlipExist(v) then
+                RemoveBlip(v)
+            end
+        end
+        blips = {}
+    end
+end
+
+local function LoadBlips()
+    for _, station in pairs(Config.Locations["stations"]) do
+        if station.showBlip then
+            if station.type ~= nil then
+                if PlayerData.job.name == 'drivingteacher' and PlayerData.job.onduty then
+                    local blip = AddBlipForCoord(station.coords.x, station.coords.y, station.coords.z)
+                    SetBlipSprite(blip, station.blipSprite)
+                    SetBlipAsShortRange(blip, true)
+                    SetBlipScale(blip, station.blipScale)
+                    SetBlipColour(blip, station.blipColour)
+                    BeginTextCommandSetBlipName("STRING")
+                    AddTextComponentString(station.label)
+                    EndTextCommandSetBlipName(blip)
+                    blips[#blips + 1] = blip
+                end
+            else
+                local blip = AddBlipForCoord(station.coords.x, station.coords.y, station.coords.z)
+                SetBlipSprite(blip, station.blipSprite)
+                SetBlipAsShortRange(blip, true)
+                SetBlipScale(blip, station.blipScale)
+                SetBlipColour(blip, station.blipColour)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentString(station.label)
+                EndTextCommandSetBlipName(blip)
+                blips[#blips + 1] = blip
+            end
+        end
+    end
+end
+
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
+    LoadBlips()
+    LoadGarages()
 end)
 
 RegisterNetEvent('QBCore:Player:SetPlayerData', function(data)
     PlayerData = data
 end)
 
+RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
+    PlayerData.job = job
+    DeleteAllBlips()
+    exports['qb-core']:HideText()
+    Wait(100)
+    LoadBlips()
+    LoadGarages()
+end)
+
 AddEventHandler('onResourceStart', function(resource)
     if resource == GetCurrentResourceName() then
         PlayerData = QBCore.Functions.GetPlayerData()
+        LoadBlips()
+        LoadGarages()
+        exports['qb-core']:HideText()
+    end
+end)
+
+AddEventHandler('onResourceSrop', function(resource)
+    if resource == GetCurrentResourceName() then
+        DeleteAllBlips()
+        DeleteGarages()
+        exports['qb-core']:HideText()
     end
 end)
 
@@ -418,66 +501,8 @@ RegisterNetEvent('mh-drivingteacherjob:client:takeLicinceMenu', function()
     end)
 end)
 
--- Threads
-CreateThread(function()
-    for _, station in pairs(Config.Locations["stations"]) do
-        if station.showBlip then
-            local blip = AddBlipForCoord(station.coords.x, station.coords.y, station.coords.z)
-            SetBlipSprite(blip, station.blipSprite)
-            SetBlipAsShortRange(blip, true)
-            SetBlipScale(blip, station.blipScale)
-            SetBlipColour(blip, station.blipColour)
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(station.label)
-            EndTextCommandSetBlipName(blip)
-        end
-    end
-end)
-
--- Toggle Duty in an event.
-RegisterNetEvent('mh-drivingteacherjob:client:ToggleDuty', function()
-    TriggerServerEvent("QBCore:ToggleDuty")
-end)
-
-CreateThread(function()
-    -- Toggle Duty
-    for k, v in pairs(Config.Locations["duty"]) do
-        exports['qb-target']:AddBoxZone("drivingteacher_"..k, v, 1, 1, {
-            name = "drivingteacher_"..k,
-            heading = 11,
-            debugPoly = Config.debugPoly,
-            minZ = v.z - 1,
-            maxZ = v.z + 1,
-        }, {
-            options = {
-                {
-                    type = "client",
-                    event = "mh-drivingteacherjob:client:ToggleDuty",
-                    icon = "fas fa-sign-in-alt",
-                    label = "Sign In",
-                    job = "drivingteacher",
-                },
-            },
-            distance = 1.5
-        })
-    end
-end)
-
-for k, v in pairs(Config.Garages) do
-    for _, garage in pairs(v) do
-        zones[#zones + 1] = PolyZone:Create({table.unpack(garage.zones)}, {
-            name = garage.name,
-            minZ = garage.minZ,
-            maxZ = garage.maxZ,
-            debugPoly = Config.debugPoly,
-        })
-    end
-end
-garageCombo = ComboZone:Create(zones, { name = "GarageCombo2", debugPoly = Config.DebugPoly  })
-
 RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
     GetNeerestGarage()
-    print(garageType)
     if garageType == 'car' then
         local menu = exports["qb-input"]:ShowInput({
             header = Lang:t('menu.main_header'),
@@ -505,7 +530,6 @@ RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
             }
         })
         if menu ~= nil and menu.licence ~= nil then
-            print(menu.licence)
             if menu.licence == "AM" then SpawnTestVehicle('AM') end
             if menu.licence == "A" then SpawnTestVehicle('A') end
             if menu.licence == "B" then SpawnTestVehicle('B') end
@@ -562,12 +586,42 @@ RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
     end
 end)
 
+RegisterNetEvent('mh-drivingteacherjob:client:ToggleDuty', function()
+    TriggerServerEvent("QBCore:ToggleDuty")
+end)
+
+CreateThread(function()
+    -- Toggle Duty
+    for k, v in pairs(Config.Locations["duty"]) do
+        if PlayerData.job.name == 'drivingteacher' then
+            exports['qb-target']:AddBoxZone("drivingteacher_"..k, v, 1, 1, {
+                name = "drivingteacher_"..k,
+                heading = 11,
+                debugPoly = false,
+                minZ = v.z - 1,
+                maxZ = v.z + 1,
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        event = "mh-drivingteacherjob:client:ToggleDuty",
+                        icon = "fas fa-sign-in-alt",
+                        label = "Sign In",
+                        job = "drivingteacher",
+                    },
+                },
+                distance = 1.5
+            })
+        end
+    end
+end)
+
 CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
             if IsControlJustReleased(0, 38) and isInside then
                 local ped = PlayerPedId()
-                local pos = GetEntityCoords(PlayerPedId())
+                local pos = GetEntityCoords(ped)
                 if PlayerData.job.name == 'drivingteacher' and PlayerData.job.onduty then
                     if IsPedInAnyVehicle(ped, false) then
                         local veh = GetVehiclePedIsIn(ped)
@@ -591,12 +645,11 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    Wait(1000)
     while true do
-        if LocalPlayer.state.isLoggedIn then
-            local ped = PlayerPedId()
-            local pos = GetEntityCoords(ped)
-            local isPointInside = garageCombo:isPointInside(pos)
+        local ped = PlayerPedId()
+        local pos = GetEntityCoords(ped)
+        local isPointInside = garageCombo:isPointInside(pos)
+        if PlayerData.job.name == 'drivingteacher' and PlayerData.job.onduty then
             if isPointInside then
                 if IsPedInAnyVehicle(ped, false) then
                     exports['qb-core']:DrawText(Lang:t('menu.park_vehicle'))
@@ -605,9 +658,7 @@ CreateThread(function()
                 end
                 isInside = true
             else
-                if isInside then
-                    exports['qb-core']:HideText()
-                end
+                if isInside then exports['qb-core']:HideText() end
                 isInside = false
             end
         end
