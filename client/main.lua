@@ -348,14 +348,14 @@ RegisterNetEvent('mh-drivingteacherjob:client:giveLicinceMenu', function()
             submitText = Lang:t('menu.give_help'),
             inputs = {
                 {
-                    text = "Selecteer Speler",
+                    text = Lang:t('licence.select_player'),
                     name = "id",
                     type = "select",
                     options = playerlist,
                     isRequired = true
                 },
                 {
-                    text = "Selecteer licentie",
+                    text = Lang:t('licence.select_licence'),
                     name = "licence",
                     type = "select",
                     options = {
@@ -400,7 +400,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:takeLicinceMenu', function()
             submitText = Lang:t('menu.remove_help'),
             inputs = {
                 {
-                    text = "Selecteer Speler",
+                    text = Lang:t('licence.select_player'),
                     name = "id",
                     type = "select",
                     options = playerlist,
@@ -484,7 +484,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
             submitText = "",
             inputs = {
                 {
-                    text = "Selecteer Voertuig",
+                    text = Lang:t('menu.select_vehicle'),
                     name = "licence",
                     type = "select",
                     options = {
@@ -525,7 +525,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
             submitText = "",
             inputs = {
                 {
-                    text = "Selecteer Voertuig",
+                    text = Lang:t('menu.select_vehicle'),
                     name = "licence",
                     type = "select",
                     options = {
@@ -546,7 +546,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
             submitText = "",
             inputs = {
                 {
-                    text = "Selecteer Voertuig",
+                    text = Lang:t('menu.select_vehicle'),
                     name = "licence",
                     type = "select",
                     options = {
