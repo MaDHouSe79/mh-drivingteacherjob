@@ -30,6 +30,21 @@ Config.Garages = {
             minZ = 27.587503433228,
             maxZ = 33.587503433228,
         }, -- you can add jog garage more here
+	[1] =  {
+            name = "Air School Garage",                           -- blip name
+            job = "drivingteacher",                                    -- job
+            showBlip = true,                                           -- show blip
+            blip  = 50,                                                -- blip icon
+            coords = {x = 435.52386, y = -975.8889, z = 25.699798, h = 88.224151}, -- map blip
+            zones = {
+                vector2(-1221.4853515625, -2312.9094238282),
+                vector2(-1273.4505615234, -2282.900390625),
+                vector2(-1255.9765625, -2252.6423339844),
+                vector2(-1203.982788086, -2282.5849609375),
+            },
+            minZ = 10.944558143616,
+            maxZ = 16.944558143616,
+        }, -- you can add jog garage more here
     },-- you can add more job garages here
 }
 
@@ -62,6 +77,15 @@ Config.Locations = {
 	    label = "Drive School Garage", 
             coords = vector4(250.5708, -1405.9473, 30.5875, 314.9212),
             heading = 44.4795,
+            blipSprite = 50,
+            blipColour = 2,
+            blipScale = 0.8,
+            showBlip = true,
+        },
+        [4] = {
+	    label = "Airschool Garage", 
+            coords = vector4(-1242.5720, -2289.8779, 13.9445, 52.4307),
+            heading = 52.4307,
             blipSprite = 50,
             blipColour = 2,
             blipScale = 0.8,
