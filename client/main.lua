@@ -17,7 +17,7 @@ local isInside = false
 local function SetFuel(vehicle, fuel)
     if type(fuel) == 'number' and fuel >= 0 and fuel <= 100 then
         SetVehicleFuelLevel(vehicle, fuel + 0.0)
-	    DecorSetFloat(vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(vehicle))
+	DecorSetFloat(vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(vehicle))
     end
 end
 
@@ -27,7 +27,7 @@ end
 
 local function GetNeerestGarage()
     local playerPed = PlayerPedId()
-	local coords = GetEntityCoords(PlayerPedId())
+    local coords = GetEntityCoords(PlayerPedId())
     for key, garage in pairs(Config.Locations["stations"]) do
         local distance = GetDistance(coords, garage.coords)
         if distance < 25 then 
@@ -39,7 +39,7 @@ end
 
 local function SpawnAirplane(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
@@ -70,7 +70,7 @@ end
 
 local function SpawnHelikoper(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
@@ -101,7 +101,7 @@ end
 
 local function SpawnBoat(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
@@ -131,13 +131,13 @@ end
 
 local function SpawnTruckAndTrailer(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     local vehiclePosition, vehicleHeading
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-	    return
+	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehiclePosition = GetEntityCoords(_vehicle)
@@ -175,13 +175,13 @@ end
 
 local function SpawnBusAndTrailer(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     local vehiclePosition, vehicleHeading
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-	    return
+	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             vehiclePosition = GetEntityCoords(_vehicle)
@@ -219,7 +219,7 @@ end
 
 local function SpawnBoatTrailer(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     local vehiclebone = nil
@@ -228,7 +228,7 @@ local function SpawnBoatTrailer(licence)
     local trailerPosition, trailerHeading = nil
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-	    return
+	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
@@ -283,12 +283,12 @@ end
 
 local function SpawnTestVehicle(licence)
     local playerPed = PlayerPedId()
-	local coords = garageSpawn
+    local coords = garageSpawn
     local heading = coords.w
     local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
-	    return
+	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
