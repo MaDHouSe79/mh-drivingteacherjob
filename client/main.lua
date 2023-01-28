@@ -428,7 +428,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:giveLicinceMenu', function()
         end
         local menu = exports["qb-input"]:ShowInput({
             header = Lang:t('menu.main_give_header'),
-            submitText = Lang:t('menu.give_help'),
+            submitText = "",
             inputs = {
                 {
                     text = Lang:t('licence.select_player'),
