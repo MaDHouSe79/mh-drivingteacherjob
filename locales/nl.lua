@@ -29,6 +29,7 @@ local Translations = {
 		['licence_types'] = "Types N/A/AM/B/BE/C/CE/D/DE/T/H/P",
 		['park_vehicle'] = "[E] - Parkeer voertuig",
 		['open_garage'] = "[E] - Open Garage",
+		['give_header'] = "Geef licantie",
 	},
 	licence = {
 		['select_player'] = "Selecteer Speler",
