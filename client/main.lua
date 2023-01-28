@@ -480,7 +480,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:takeLicinceMenu', function()
         end
         local menu = exports["qb-input"]:ShowInput({
             header = Lang:t('menu.main_take_header'),
-            submitText = Lang:t('menu.remove_help'),
+            submitText = "",
             inputs = {
                 {
                     text = Lang:t('licence.select_player'),
