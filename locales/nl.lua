@@ -9,8 +9,8 @@ local Translations = {
 
     info = {
 		['on_duty'] = '[E] - Ga in Dienst',
-        ['off_duty'] = '[E] - Ga uit Dienst',
-        ['onoff_duty'] = 'In/Uit Dienst',
+        	['off_duty'] = '[E] - Ga uit Dienst',
+        	['onoff_duty'] = 'In/Uit Dienst',
     },
 
 	notify = {
@@ -20,12 +20,15 @@ local Translations = {
 		['passed_for_license'] = "Je bent gelaagd voor %{license} licentie",
 		['your_license_has_been_taken'] = "Uw rijbewijs is ingenomen door %{player}",
 		['license_has_been_taken'] = "Speler met ID %{id} heeft geen geldig licentie meer",
+		['wrong_vehicle_to_park'] = "Dit voertuig kan hier niet worden gepakeerd omdat het geen rijschool auto is.",
 	},
 
 	menu = {
 		["customer_id"] = "Player ID",
 		['main_header'] = "Rijschool Menu",
 		['licence_types'] = "Types N/A/AM/B/BE/C/CE/D/DE/T/H/P",
+		['park_vehicle'] = "[E] - Parkeer voertuig",
+		['open_garage'] = "[E] - Open Garage",
 	},
 	licence = {
 		['select_player'] = "Selecteer Speler",
