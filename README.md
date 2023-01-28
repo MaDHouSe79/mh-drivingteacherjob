@@ -1,6 +1,9 @@
 # A RP Driving Teacher Job for QBCore.
 - There are 15 licences you can give to players with this job.
 
+## Read UPDATE.MD 
+- if there is a update read the update.md, maby youneed to change something.
+
 ## How it works:
 - To bill a player for a licence use `/bill [id] [amount]`
 - you can also add some objects on the road as drive test obstacles, so the student can show his/her driving skills ;)  
