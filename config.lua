@@ -4,7 +4,6 @@
 
 Config = {}
 
-Config.debugPoly = false
 Config.UseMHVehicleKeyItem = false
 Config.GiveKeyScriptTrigger = "qb-vehiclekeys:server:AcquireVehicleKeys"
 Config.RemoveKeyScriptTrigger = "qb-vehiclekeys:client:RemoveKeys"
@@ -31,6 +30,7 @@ Config.Garages = {
             },
             minZ = 6.4056758880616,
             maxZ = 12.405675888062,
+	    debugPoly = false,
         },
         [1] = {
             name = "Air School Garage",                           -- blip name
@@ -46,6 +46,7 @@ Config.Garages = {
             },
             minZ = 10.944558143616,
             maxZ = 16.944558143616,
+	    debugPoly = false,
         },
         [2] = {
             name = "Boat School Garage",                           -- blip name
@@ -65,6 +66,7 @@ Config.Garages = {
             },
             minZ = -1.3987105488778,
             maxZ = 4.6012894511222,
+	    debugPoly = false,
         }, -- you can add jog garage more here
 
     },-- you can add more job garages here
