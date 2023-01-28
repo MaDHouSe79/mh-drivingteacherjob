@@ -4,8 +4,8 @@
 
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
-local PlayerJob = {}
-local onDuty = false
+local zones = {}
+local garageCombo = {}
 local currentTestDriving = false
 local currentStudentID = nil
 local currentDriveTest = nil
@@ -311,52 +311,10 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(data)
     PlayerData = data
 end)
 
-RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
-    PlayerJob = job
-end)
-
-RegisterNetEvent('QBCore:Client:SetDuty', function(duty)
-    onDuty = duty
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnAirplane', function()
-    SpawnAirplane('P')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnHelikoper', function()
-    SpawnHelikoper('H')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnBoat', function()
-    SpawnBoat('T')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnBoatTrailer', function()
-    SpawnBoatTrailer('BE')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnTruckTrailer', function()
-    SpawnTruckAndTrailer('CE')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnScooter', function()
-    SpawnTestVehicle('AM')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnMotor', function()
-    SpawnTestVehicle('A')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnCar', function()
-    SpawnTestVehicle('B')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnTruck', function()
-    SpawnTestVehicle('C')
-end)
-
-RegisterNetEvent('qb-drivingteacherjob:client:spawnBus', function()
-    SpawnTestVehicle('D')
+AddEventHandler('onResourceStart', function(resource)
+    if resource == GetCurrentResourceName() then
+        PlayerData = QBCore.Functions.GetPlayerData()
+    end
 end)
 
 RegisterNetEvent('qb-drivingteacherjob:client:giveKeys', function(plate)
@@ -425,7 +383,6 @@ RegisterNetEvent('mh-drivingteacherjob:client:takeLicinceMenu', function()
         for key, v in pairs(online) do
             playerlist[#playerlist + 1] = {value = v.source, text = "(ID:"..v.source..") "..v.fullname}
         end
-
         local menu = exports["qb-input"]:ShowInput({
             header = Lang:t('menu.main_take_header'),
             submitText = Lang:t('menu.remove_help'),
@@ -467,7 +424,6 @@ end)
 
 -- Toggle Duty in an event.
 RegisterNetEvent('qb-drivingteacherjob:client:ToggleDuty', function()
-    onDuty = not onDuty
     TriggerServerEvent("QBCore:ToggleDuty")
 end)
 
@@ -478,7 +434,7 @@ CreateThread(function()
         exports['qb-target']:AddBoxZone("drivingteacher_"..k, v, 1, 1, {
             name = "drivingteacher_"..k,
             heading = 11,
-            debugPoly = false,
+            debugPoly = Config.debugPoly,
             minZ = v.z - 1,
             maxZ = v.z + 1,
         }, {
@@ -495,3 +451,122 @@ CreateThread(function()
         })
     end
 end)
+
+
+for k, v in pairs(Config.Garages) do
+    for _, garage in pairs(v) do
+        zones[#zones + 1] = PolyZone:Create({table.unpack(garage.zones)}, {
+            name = garage.name,
+            minZ = garage.minZ,
+            maxZ = garage.maxZ,
+            debugPoly = Config.debugPoly,
+        })
+    end
+end
+garageCombo = ComboZone:Create(zones, { name = "GarageCombo2", debugPoly = Config.DebugPoly })
+
+RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
+    local playerlist = {}
+    local menu = exports["qb-input"]:ShowInput({
+        header = Lang:t('menu.main_give_header'),
+        submitText = Lang:t('menu.give_help'),
+        inputs = {
+            {
+                text = "Selecteer Voertuig",
+                name = "licence",
+                type = "select",
+                options = {
+                    { value = "AM", text = "Brommer Rijbewijs"},
+                    { value = "A", text = "Motor Rijbewijs" },
+                    { value = "B", text = "Auto Rijbewijs" },
+                    { value = "BE", text = "Auto + Aanhanger Rijbewijs" },
+                    { value = "C", text = "Vrachtwagen Rijbewijs" },
+                    { value = "CE", text = "Vrachtwagen + Aanhanger Rijbewijs" },
+                    { value = "D", text = "Bus Rijbewijs" },
+                    { value = "DE", text = "Bus + Aanhanger Rijbewijs" },
+                    { value = "T", text = "Vaarbewijs Boten" },
+                    { value = "H", text = "Vliegbrevet Helikopter" },
+                    { value = "P", text = "Vliegbrevet Vliegtuig" },
+                    { value = "R", text = "Race licantie" },
+                    { value = "AMB", text = "Ambulance licantie" },
+                    { value = "POL", text = "Politie licantie" },
+                },
+                isRequired = true
+            }
+        }
+    })
+    if menu then
+        if not menu.id and not menu.licence then
+            return
+        else
+            if menu.licence == "AM" then SpawnTestVehicle('AM') end
+            if menu.licence == "A" then SpawnTestVehicle('A') end
+            if menu.licence == "B" then SpawnTestVehicle('B') end
+            if menu.licence == "BE" then SpawnBoatTrailer('BE') end
+            if menu.licence == "C" then SpawnTestVehicle('C') end
+            if menu.licence == "CE" then SpawnTruckAndTrailer('CE') end
+            if menu.licence == "D" then SpawnTestVehicle('D') end
+            if menu.licence == "DE" then SpawnTestVehicle('D') end
+            if menu.licence == "T" then SpawnBoat('T') end
+            if menu.licence == "H" then SpawnHelikoper('H') end
+            if menu.licence == "P" then SpawnAirplane('P') end
+            if menu.licence == "R" then SpawnTestVehicle('R') end
+            if menu.licence == "AMB" then SpawnTestVehicle('AMB') end
+            if menu.licence == "POL" then SpawnTestVehicle('POL') end
+        end
+    end
+end)
+
+CreateThread(function()
+    while true do
+        if LocalPlayer.state.isLoggedIn then
+            if IsControlJustReleased(0, 38) and isInside then
+                local ped = PlayerPedId()
+                local pos = GetEntityCoords(PlayerPedId())
+                if PlayerData.job.name == 'drivingteacher' and PlayerData.job.onduty then
+                    if IsPedInAnyVehicle(ped, false) then
+                        local veh = GetVehiclePedIsIn(ped)
+                        local plate = QBCore.Functions.GetPlate(veh)
+                        if plate == currentPlate then
+                            TaskLeaveVehicle(ped, veh)
+                            Wait(1500)
+                            if Config.UseMHVehicleKeyItem then exports['mh-vehiclekeyitem']:DeleteKey(QBCore.Functions.GetPlate(veh)) end
+                            QBCore.Functions.DeleteVehicle(veh)
+                        else
+                            QBCore.Functions.Notify(Lang:t('notify.wrong_vehicle_to_park'))
+                        end
+                    else
+                        TriggerEvent('mh-drivingteacherjob:client:vehicleMenu', pos)
+                    end
+                end
+            end
+        end
+        Wait(10)
+    end
+end)
+
+CreateThread(function()
+    Wait(1000)
+    while true do
+        if LocalPlayer.state.isLoggedIn then
+            local ped = PlayerPedId()
+            local pos = GetEntityCoords(ped)
+            local isPointInside = garageCombo:isPointInside(pos)
+            if isPointInside then
+                if IsPedInAnyVehicle(ped, false) then
+                    exports['qb-core']:DrawText(Lang:t('menu.park_vehicle'))
+                else
+                    exports['qb-core']:DrawText(Lang:t('menu.open_garage'))
+                end
+                isInside = true
+            else
+                if isInside then
+                    exports['qb-core']:HideText()
+                end
+                isInside = false
+            end
+        end
+        Wait(1000)
+    end
+end)
+
