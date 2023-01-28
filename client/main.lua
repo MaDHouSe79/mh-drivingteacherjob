@@ -6,145 +6,161 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 local zones = {}
 local garageCombo = {}
+local garageSpawn = nil
 local currentTestDriving = false
 local currentStudentID = nil
 local currentDriveTest = nil
 local currentVehicle = nil
 local currenVehicleName = nil
 local currentPlate = nil
+local garageType = nil
 local inDuty
 
 local function SetFuel(vehicle, fuel)
     if type(fuel) == 'number' and fuel >= 0 and fuel <= 100 then
         SetVehicleFuelLevel(vehicle, fuel + 0.0)
-	DecorSetFloat(vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(vehicle))
+	    DecorSetFloat(vehicle, "_FUEL_LEVEL", GetVehicleFuelLevel(vehicle))
+    end
+end
+
+local function GetDistance(from, to)
+    return #(vector3(from.x, from.y, from.z) - vector3(to.x, to.y, to.z))
+end
+
+local function GetNeerestGarage()
+    local playerPed = PlayerPedId()
+	local coords = GetEntityCoords(PlayerPedId())
+    for key, garage in pairs(Config.Locations["stations"]) do
+        local distance = GetDistance(coords, garage.coords)
+        if distance < 25 then 
+            garageType = garage.type
+            garageSpawn = garage.spawn
+        end
     end
 end
 
 local function SpawnAirplane(licence)
-    local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
-            vehicle = _vehicle
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
-            currentVehicle = vehicle
+            currentVehicle = _vehicle
             currentPlate = plate
             currenVehicleName = Config.VehicleModels[licence]
-            SetVehicleNumberPlateText(vehicle, plate)
-            SetEntityHeading(vehicle, heading)
-            SetFuel(vehicle, 100.0)
-            SetVehicleOnGroundProperly(vehicle)
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            SetVehicleCustomPrimaryColour(vehicle, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            SetVehicleUndriveable(vehicle, false)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, vector3(tmpSpawnPosition.x, tmpSpawnPosition.y, tmpSpawnPosition.z + 1.0), true)
+            SetVehicleNumberPlateText(_vehicle, plate)
+            SetEntityHeading(_vehicle, heading)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleOnGroundProperly(_vehicle)
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            SetVehicleCustomPrimaryColour(_vehicle, 0, 0, 0)
+            SetVehicleDirtLevel(_vehicle, 0)
+            SetVehicleUndriveable(_vehicle, false)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
     end
 end
 
 local function SpawnHelikoper(licence)
-    local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
-            vehicle = _vehicle
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
-            currentVehicle = vehicle
+            currentVehicle = _vehicle
             currentPlate = plate
             currenVehicleName = Config.VehicleModels[licence]
-            SetVehicleNumberPlateText(vehicle, plate)
-            SetEntityHeading(vehicle, heading)
-            SetFuel(vehicle, 100.0)
-            SetVehicleOnGroundProperly(vehicle)
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            SetVehicleCustomPrimaryColour(vehicle, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            SetVehicleUndriveable(vehicle, false)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, vector3(tmpSpawnPosition.x, tmpSpawnPosition.y, tmpSpawnPosition.z + 1.0), true)
+            SetVehicleNumberPlateText(_vehicle, plate)
+            SetEntityHeading(_vehicle, heading)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleOnGroundProperly(_vehicle)
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            SetVehicleCustomPrimaryColour(_vehicle, 0, 0, 0)
+            SetVehicleDirtLevel(_vehicle, 0)
+            SetVehicleUndriveable(_vehicle, false)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
     end
 end
 
 local function SpawnBoat(licence)
-    local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
-            vehicle = _vehicle
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
-            currentVehicle = vehicle
+            currentVehicle = _vehicle
             currentPlate = plate
             currenVehicleName = Config.VehicleModels[licence]
-            SetVehicleNumberPlateText(vehicle, plate)
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-            SetEntityHeading(vehicle, heading)
-            SetFuel(vehicle, 100.0)
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            SetVehicleCustomPrimaryColour(vehicle, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            SetVehicleUndriveable(vehicle, false)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, vector3(tmpSpawnPosition.x, tmpSpawnPosition.y, tmpSpawnPosition.z + 1.0), true)
-
+            SetVehicleNumberPlateText(_vehicle, plate)
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
+            SetEntityHeading(_vehicle, heading)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            SetVehicleCustomPrimaryColour(_vehicle, 0, 0, 0)
+            SetVehicleDirtLevel(_vehicle, 0)
+            SetVehicleUndriveable(_vehicle, false)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
     end
 end
 
 local function SpawnTruckAndTrailer(licence)
-    local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
-    local vehiclePosition
-    local vehicleHeading
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
+    local vehiclePosition, vehicleHeading
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	    return
     else
-        QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(veh)
-            local vehicle = veh
-            vehiclePosition = GetEntityCoords(vehicle)
-            vehicleHeading = GetEntityHeading(vehicle)
-            SetVehicleNumberPlateText(vehicle, 'TR_LR_' .. string.format('%06d', math.random(1, 99)))
-            SetEntityHeading(vehicle, heading)
-            local plate = QBCore.Functions.GetPlate(vehicle)
-            currentVehicle = vehicle
+        QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
+            vehiclePosition = GetEntityCoords(_vehicle)
+            vehicleHeading = GetEntityHeading(_vehicle)
+            SetVehicleNumberPlateText(_vehicle, 'TR_LR_' .. string.format('%06d', math.random(1, 99)))
+            SetEntityHeading(_vehicle, heading)
+            local plate = QBCore.Functions.GetPlate(_vehicle)
+            currentVehicle = _vehicle
             currentPlate = plate
             currenVehicleName = Config.VehicleModels[licence]
-            SetFuel(vehicle, 100.0)
-            SetVehicleOnGroundProperly(vehicle)
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleOnGroundProperly(_vehicle)
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
             SetVehicleCustomPrimaryColour(loading, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, tmpSpawnPosition, true)
+            SetVehicleDirtLevel(_vehicle, 0)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
 	    Wait(100)
         if Config.Trailers.CE ~= '' then
             QBCore.Functions.SpawnVehicle(Config.Trailers.CE, function(loading)
@@ -153,43 +169,42 @@ local function SpawnTruckAndTrailer(licence)
                 SetVehicleCustomPrimaryColour(loading, 0, 0, 0)
                 SetVehicleDirtLevel(loading)
                 WashDecalsFromVehicle(loading, 1.0)
-                AttachEntityToEntity(loading, vehicle, 20, 0.0, -1.0, 0.25, 0.0, 0.0, 0.0, false, false, true, false, 20, true)
+                AttachEntityToEntity(loading, _vehicle, 20, 0.0, -1.0, 0.25, 0.0, 0.0, 0.0, false, false, true, false, 20, true)
             end, vector3(vehiclePosition.x, vehiclePosition.y - 5.0, vehiclePosition.z + 0.5), true)
         end
     end
 end
 
 local function SpawnBusAndTrailer(licence)
-    local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
-    local vehiclePosition
-    local vehicleHeading
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
+    local vehiclePosition, vehicleHeading
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	    return
     else
-        QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(veh)
-            local vehicle = veh
-            vehiclePosition = GetEntityCoords(vehicle)
-            vehicleHeading = GetEntityHeading(vehicle)
-            SetVehicleNumberPlateText(vehicle, 'TR_LR_' .. string.format('%06d', math.random(1, 99)))
-            SetEntityHeading(vehicle, heading)
-            local plate = QBCore.Functions.GetPlate(vehicle)
-            currentVehicle = vehicle
+        QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
+            vehiclePosition = GetEntityCoords(_vehicle)
+            vehicleHeading = GetEntityHeading(_vehicle)
+            SetVehicleNumberPlateText(_vehicle, 'TR_LR_' .. string.format('%06d', math.random(1, 99)))
+            SetEntityHeading(_vehicle, heading)
+            local plate = QBCore.Functions.GetPlate(_vehicle)
+            currentVehicle = _vehicle
             currentPlate = plate
             currenVehicleName = Config.VehicleModels[licence]
-            SetFuel(vehicle, 100.0)
-            SetVehicleOnGroundProperly(vehicle)
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleOnGroundProperly(_vehicle)
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
             SetVehicleCustomPrimaryColour(loading, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, tmpSpawnPosition, true)
+            SetVehicleDirtLevel(_vehicle, 0)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
         Wait(100)
         if Config.Trailers.DE ~= '' then
             QBCore.Functions.SpawnVehicle(Config.Trailers.DE, function(loading)
@@ -198,63 +213,59 @@ local function SpawnBusAndTrailer(licence)
                 SetVehicleCustomPrimaryColour(loading, 0, 0, 0)
                 SetVehicleDirtLevel(loading)
                 WashDecalsFromVehicle(loading, 1.0)
-                AttachEntityToEntity(loading, vehicle, 20, 0.0, -1.0, 0.25, 0.0, 0.0, 0.0, false, false, true, false, 20, true)
+                AttachEntityToEntity(loading, _vehicle, 20, 0.0, -1.0, 0.25, 0.0, 0.0, 0.0, false, false, true, false, 20, true)
             end, vector3(vehiclePosition.x, vehiclePosition.y - 5.0, vehiclePosition.z + 0.5), true)
         end
     end
 end
 
 local function SpawnBoatTrailer(licence)
-    local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 5.0, coords.y + 1.0, coords.z)
-    local vehicle
-    local vehiclebone
-    local trailer
-    local trailerbone
-    local vehiclePosition
-    local vehicleHeading
-    local trailerPosition
-    local trailerHeading
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
+    local vehiclebone = nil
+    local trailer, trailerbone = nil
+    local vehiclePosition, vehicleHeading = nil
+    local trailerPosition, trailerHeading = nil
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	    return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
-            vehicle = _vehicle
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
-            SetVehicleNumberPlateText(vehicle, plate)
-            SetEntityHeading(vehicle, heading)
-            vehiclePosition = GetEntityCoords(vehicle)
-            vehicleHeading = GetEntityHeading(vehicle)
+            SetVehicleNumberPlateText(_vehicle, plate)
+            SetEntityHeading(_vehicle, heading)
+            vehiclePosition = GetEntityCoords(_vehicle)
+            vehicleHeading = GetEntityHeading(_vehicle)
             currenVehicleName = Config.VehicleModels[licence]
-            vehiclebone = GetEntityBoneIndexByName(vehicle, 'attach_male')
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-            SetFuel(vehicle, 100.0)
-            SetVehicleOnGroundProperly(vehicle)
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            SetVehicleCustomPrimaryColour(vehicle, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            SetVehicleUndriveable(vehicle, false)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            currentVehicle = vehicle
+            vehiclebone = GetEntityBoneIndexByName(_vehicle, 'attach_male')
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleOnGroundProperly(_vehicle)
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            SetVehicleCustomPrimaryColour(_vehicle, 0, 0, 0)
+            SetVehicleDirtLevel(_vehicle, 0)
+            SetVehicleUndriveable(_vehicle, false)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            currentVehicle = _vehicle
             currentPlate = plate
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, tmpSpawnPosition, true)
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
         Wait(100)
         QBCore.Functions.SpawnVehicle(Config.Trailers.BE, function(_trailer)
             trailer = _trailer
-            trailerPosition = GetEntityCoords(trailer)
-            trailerHeading = GetEntityHeading(trailer)
-            trailerbone = GetEntityBoneIndexByName(trailer, 'attach_female')
+            trailerPosition = GetEntityCoords(_trailer)
+            trailerHeading = GetEntityHeading(_trailer)
+            trailerbone = GetEntityBoneIndexByName(_trailer, 'attach_female')
             local plate = 'TR_LR_' .. string.format('%06d', math.random(1, 99))
-            SetVehicleNumberPlateText(trailer, plate)
-            SetEntityHeading(trailer, heading)
-            SetVehicleCustomPrimaryColour(trailer, 0, 0, 0)
-            SetVehicleDirtLevel(trailer)
-            WashDecalsFromVehicle(trailer, 1.0)
+            SetVehicleNumberPlateText(_trailer, plate)
+            SetEntityHeading(_trailer, heading)
+            SetVehicleCustomPrimaryColour(_trailer, 0, 0, 0)
+            SetVehicleDirtLevel(_trailer)
+            WashDecalsFromVehicle(_trailer, 1.0)
             AttachEntityToEntity(trailerbone, vehiclebone, 1, 0.0, -1.0, 0.25, 0.0, 0.0, 0.0, false, false, true, false, 20, true)
         end, vector3(vehiclePosition.x + 0.2, vehiclePosition.y - 6.5, vehiclePosition.z), true)
         Wait(100)
@@ -267,39 +278,39 @@ local function SpawnBoatTrailer(licence)
                 SetVehicleDirtLevel(loading)
                 WashDecalsFromVehicle(loading, 1.0)
                 SetFuel(loading, 100.0)
-            end, vector3(trailerPosition.x, trailerPosition.y, trailerPosition.z + 1.0), true)
+            end, vector3(trailerPosition.x, trailerPosition.y, trailerPosition.z), true)
         end
     end
 end
 
 local function SpawnTestVehicle(licence)
-    local coords  = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(coords)
-    local tmpSpawnPosition = vector3(coords.x + 3.0, coords.y + 1.0, coords.z)
+    local playerPed = PlayerPedId()
+	local coords = garageSpawn
+    local heading = coords.w
+    local tmpSpawnPosition = vector3(coords.x, coords.y, coords.z)
     if not QBCore.Functions.SpawnClear(tmpSpawnPosition, 5.0) then
         QBCore.Functions.Notify(Lang:t('error.area_is_obstructed'), 'error', 5000)
 	    return
     else
         QBCore.Functions.SpawnVehicle(Config.VehicleModels[licence], function(_vehicle)
-            vehicle = _vehicle
             local plate = 'TL' .. string.format('%06d', math.random(1, 999999))
-            currentVehicle = vehicle
+            currentVehicle = _vehicle
             currentPlate = plate
             currenVehicleName = Config.VehicleModels[licence]
-            SetVehicleNumberPlateText(vehicle, plate)
-            SetEntityHeading(vehicle, heading)
-            SetFuel(vehicle, 100.0)
-            SetVehicleOnGroundProperly(vehicle)
-            SetVehicleEngineHealth(vehicle, 1000.0)
-            SetVehicleBodyHealth(vehicle, 1000.0)
-            SetVehicleCustomPrimaryColour(vehicle, 0, 0, 0)
-            SetVehicleDirtLevel(vehicle, 0)
-            SetVehicleUndriveable(vehicle, false)
-            WashDecalsFromVehicle(vehicle, 1.0)
-            SetVehRadioStation(vehicle, 'OFF')
-            TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-            TriggerEvent('qb-drivingteacherjob:client:giveKeys', plate)
-        end, tmpSpawnPosition, true)
+            SetVehicleNumberPlateText(_vehicle, plate)
+            SetEntityHeading(_vehicle, heading)
+            SetFuel(_vehicle, 100.0)
+            SetVehicleOnGroundProperly(_vehicle)
+            SetVehicleEngineHealth(_vehicle, 1000.0)
+            SetVehicleBodyHealth(_vehicle, 1000.0)
+            SetVehicleCustomPrimaryColour(_vehicle, 0, 0, 0)
+            SetVehicleDirtLevel(_vehicle, 0)
+            SetVehicleUndriveable(_vehicle, false)
+            WashDecalsFromVehicle(_vehicle, 1.0)
+            SetVehRadioStation(_vehicle, 'OFF')
+            TaskWarpPedIntoVehicle(playerPed, _vehicle, -1)
+            TriggerEvent('mh-drivingteacherjob:client:giveKeys', plate, _vehicle)
+        end, vector4(coords.x, coords.y, coords.z, heading), true)
     end
 end
 
@@ -317,11 +328,12 @@ AddEventHandler('onResourceStart', function(resource)
     end
 end)
 
-RegisterNetEvent('qb-drivingteacherjob:client:giveKeys', function(plate)
-    TriggerServerEvent(Config.GiveKeyScriptTrigger, plate)	
+RegisterNetEvent('mh-drivingteacherjob:client:giveKeys', function(plate, vehicle)
+    TriggerServerEvent(Config.GiveKeyScriptTrigger, plate)
+    if Config.UseMHVehicleKeyItem then exports['mh-vehiclekeyitem']:CreateTempKey(vehicle) end
 end)
 
-RegisterNetEvent('qb-drivingteacherjob:client:removeKeys', function(plate)
+RegisterNetEvent('mh-drivingteacherjob:client:removeKeys', function(plate)
     TriggerEvent(Config.RemoveKeyScriptTrigger, plate)		
 end)
 
@@ -336,14 +348,14 @@ RegisterNetEvent('mh-drivingteacherjob:client:giveLicinceMenu', function()
             submitText = Lang:t('menu.give_help'),
             inputs = {
                 {
-                    text = Lang:t('licence.select_player'),
+                    text = "Selecteer Speler",
                     name = "id",
                     type = "select",
                     options = playerlist,
                     isRequired = true
                 },
                 {
-                    text = Lang:t('licence.select_licence'),
+                    text = "Selecteer licentie",
                     name = "licence",
                     type = "select",
                     options = {
@@ -388,7 +400,7 @@ RegisterNetEvent('mh-drivingteacherjob:client:takeLicinceMenu', function()
             submitText = Lang:t('menu.remove_help'),
             inputs = {
                 {
-                    text = Lang:t('licence.select_player'),
+                    text = "Selecteer Speler",
                     name = "id",
                     type = "select",
                     options = playerlist,
@@ -423,10 +435,9 @@ CreateThread(function()
 end)
 
 -- Toggle Duty in an event.
-RegisterNetEvent('qb-drivingteacherjob:client:ToggleDuty', function()
+RegisterNetEvent('mh-drivingteacherjob:client:ToggleDuty', function()
     TriggerServerEvent("QBCore:ToggleDuty")
 end)
-
 
 CreateThread(function()
     -- Toggle Duty
@@ -441,7 +452,7 @@ CreateThread(function()
             options = {
                 {
                     type = "client",
-                    event = "qb-drivingteacherjob:client:ToggleDuty",
+                    event = "mh-drivingteacherjob:client:ToggleDuty",
                     icon = "fas fa-sign-in-alt",
                     label = "Sign In",
                     job = "drivingteacher",
@@ -451,7 +462,6 @@ CreateThread(function()
         })
     end
 end)
-
 
 for k, v in pairs(Config.Garages) do
     for _, garage in pairs(v) do
@@ -463,43 +473,39 @@ for k, v in pairs(Config.Garages) do
         })
     end
 end
-garageCombo = ComboZone:Create(zones, { name = "GarageCombo2", debugPoly = Config.DebugPoly })
+garageCombo = ComboZone:Create(zones, { name = "GarageCombo2", debugPoly = Config.DebugPoly  })
 
 RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
-    local playerlist = {}
-    local menu = exports["qb-input"]:ShowInput({
-        header = Lang:t('menu.main_give_header'),
-        submitText = Lang:t('menu.give_help'),
-        inputs = {
-            {
-                text = "Selecteer Voertuig",
-                name = "licence",
-                type = "select",
-                options = {
-                    { value = "N", text = Lang:t('licence.licence_n') },
-                    { value = "AM", text = Lang:t('licence.licence_am')},
-                    { value = "A", text = Lang:t('licence.licence_a') },
-                    { value = "B", text = Lang:t('licence.licence_b') },
-                    { value = "BE", text = Lang:t('licence.licence_be') },
-                    { value = "C", text = Lang:t('licence.licence_c') },
-                    { value = "CE", text = Lang:t('licence.licence_ce') },
-                    { value = "D", text = Lang:t('licence.licence_d') },
-                    { value = "DE", text = Lang:t('licence.licence_de') },
-                    { value = "T", text = Lang:t('licence.licence_t') },
-                    { value = "H", text = Lang:t('licence.licence_h') },
-                    { value = "P", text = Lang:t('licence.licence_p') },
-                    { value = "R", text = Lang:t('licence.licence_r') },
-                    { value = "AMB", text = Lang:t('licence.licence_amb') },
-                    { value = "POL", text = Lang:t('licence.licence_pol') },
-                },
-                isRequired = true
+    GetNeerestGarage()
+    print(garageType)
+    if garageType == 'car' then
+        local menu = exports["qb-input"]:ShowInput({
+            header = Lang:t('menu.main_header'),
+            submitText = "",
+            inputs = {
+                {
+                    text = "Selecteer Voertuig",
+                    name = "licence",
+                    type = "select",
+                    options = {
+                        { value = "AM", text = Lang:t('licence.licence_am')},
+                        { value = "A", text = Lang:t('licence.licence_a') },
+                        { value = "B", text = Lang:t('licence.licence_b') },
+                        { value = "BE", text = Lang:t('licence.licence_be') },
+                        { value = "C", text = Lang:t('licence.licence_c') },
+                        { value = "CE", text = Lang:t('licence.licence_ce') },
+                        { value = "D", text = Lang:t('licence.licence_d') },
+                        { value = "DE", text = Lang:t('licence.licence_de') },
+                        { value = "R", text = Lang:t('licence.licence_r') },
+                        { value = "AMB", text = Lang:t('licence.licence_amb') },
+                        { value = "POL", text = Lang:t('licence.licence_pol') },
+                    },
+                    isRequired = true
+                }
             }
-        }
-    })
-    if menu then
-        if not menu.id and not menu.licence then
-            return
-        else
+        })
+        if menu ~= nil and menu.licence ~= nil then
+            print(menu.licence)
             if menu.licence == "AM" then SpawnTestVehicle('AM') end
             if menu.licence == "A" then SpawnTestVehicle('A') end
             if menu.licence == "B" then SpawnTestVehicle('B') end
@@ -508,12 +514,50 @@ RegisterNetEvent('mh-drivingteacherjob:client:vehicleMenu', function()
             if menu.licence == "CE" then SpawnTruckAndTrailer('CE') end
             if menu.licence == "D" then SpawnTestVehicle('D') end
             if menu.licence == "DE" then SpawnTestVehicle('D') end
-            if menu.licence == "T" then SpawnBoat('T') end
-            if menu.licence == "H" then SpawnHelikoper('H') end
-            if menu.licence == "P" then SpawnAirplane('P') end
             if menu.licence == "R" then SpawnTestVehicle('R') end
             if menu.licence == "AMB" then SpawnTestVehicle('AMB') end
             if menu.licence == "POL" then SpawnTestVehicle('POL') end
+        end
+
+    elseif garageType == 'air' then
+        local menu = exports["qb-input"]:ShowInput({
+            header = Lang:t('menu.main_header'),
+            submitText = "",
+            inputs = {
+                {
+                    text = "Selecteer Voertuig",
+                    name = "licence",
+                    type = "select",
+                    options = {
+                        { value = "H", text = Lang:t('licence.licence_h') },
+                        { value = "P", text = Lang:t('licence.licence_p') },
+                    },
+                    isRequired = true
+                }
+            }
+        })
+        if menu ~= nil and menu.licence ~= nil then
+            if menu.licence == "H" then SpawnHelikoper('H') end
+            if menu.licence == "P" then SpawnAirplane('P') end
+        end
+    elseif garageType == 'water' then
+        local menu = exports["qb-input"]:ShowInput({
+            header = Lang:t('menu.main_header'),
+            submitText = "",
+            inputs = {
+                {
+                    text = "Selecteer Voertuig",
+                    name = "licence",
+                    type = "select",
+                    options = {
+                        { value = "T", text = Lang:t('licence.licence_t') },
+                    },
+                    isRequired = true
+                }
+            }
+        })
+        if menu ~= nil and menu.licence ~= nil then
+            if menu.licence == "T" then SpawnBoat('T') end
         end
     end
 end)
@@ -570,4 +614,3 @@ CreateThread(function()
         Wait(1000)
     end
 end)
-
