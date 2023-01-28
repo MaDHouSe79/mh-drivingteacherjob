@@ -78,32 +78,32 @@ Config.Garages = {
 Config.Locations = {
 
     ['duty'] = {
-	    [0] = vector4(-928.5503, -2026.6168, 9.4023, 313.7926),
+	[0] = vector4(-928.5503, -2026.6168, 9.4023, 313.7926),
     },
 
     ["stations"] = {
         [1] = {
-	        label = "Rijschool Rolleman", 
-            coords = vector4(-916.7308, -2036.9906, 9.4065, 44.4795),
-            heading = 44.4795,
+	    label = "DriveSchool Het Klungeltje", 
+            coords = vector4(218.03, -1391.48, 30.59, 141.9),
+            heading = 139.21,
             blipSprite = 498,
             blipColour = 2,
-            blipScale = 0.5,
+            blipScale = 0.8,
             showBlip = true,
-            type = nil,
+	    type = nil,
         },
         [2] = {
-            label = "Theorie Lokaal",
-            coords = vector4(-923.6384, -2023.5885, 9.4023, 117.5955),
-            heading = 117.5955,
+            label = "DriveSchool Theorie Examen",
+            coords = vector4(208.83, -1382.73, 30.58, 132.58),
+            heading = 202.24,
             blipSprite = 525,
             blipColour = 31,
-            blipScale = 0.5,
+            blipScale = 0.8,
             showBlip = true,
             type = nil,
         },
         [3] = {
-	        label = "Rijschool Garage", 
+	    label = "Rijschool Garage", 
             coords = vector4(-981.4899, -2060.1426, 9.4057, 220.2482),
             spawn = vector4(-976.1197, -2065.4656, 9.4057, 220.4663),
             heading = 220.4663,
@@ -114,7 +114,7 @@ Config.Locations = {
             type = 'car',
         },
         [4] = {
-	        label = "Vliegschool Garage", 
+	    label = "Vliegschool Garage", 
             coords = vector4(-1242.5720, -2289.8779, 13.9445, 52.4307),
             spawn = vector4(-1243.0061, -2290.5723, 13.9445, 62.2139),
             heading = 62.2139,
@@ -125,7 +125,7 @@ Config.Locations = {
             type = 'air',
         },
         [5] = {
-	        label = "Boatschool Garage", 
+	    label = "Boatschool Garage", 
             coords = vector4(-726.3984, -1326.9353, 2.7375, 227.2540),
             spawn = vector4(-728.0537, -1328.1594, 0.0594, 229.6167),
             heading = 229.6167,
