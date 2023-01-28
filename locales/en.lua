@@ -20,12 +20,15 @@ local Translations = {
 		['passed_for_license'] = "You passed your %{license} license",
 		['your_license_has_been_taken'] = "Your driver's license has been taken away by %{player}",
 		['license_has_been_taken'] = "Player with ID %{id} no longer has a license",
+		['wrong_vehicle_to_park'] = "This vehicle cannot be parked here because it is not a driving school car.",
 	},
 
 	menu = {
 		["customer_id"] = "Player ID",
 		['main_header'] = "DriveSchool Menu",
 		['licence_types'] = "Types N/A/AM/B/BE/C/CE/D/DE/T/H/P",
+		['park_vehicle'] = "[E] - Park Vehicle",
+		['open_garage'] = "[E] - Open Garage",
 	},
 	licence = {
 		['select_player'] = "Select Player",
