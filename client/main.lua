@@ -403,7 +403,7 @@ AddEventHandler('onResourceStart', function(resource)
     end
 end)
 
-AddEventHandler('onResourceSrop', function(resource)
+AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         DeleteAllBlips()
         DeleteGarages()
