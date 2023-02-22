@@ -30,6 +30,7 @@
 - [qb-smallresources](https://github.com/qbcore-framework/qb-smallresources)
 - [Driving School Interior](https://forum.cfx.re/t/mlo-driving-school-interior/1466079)
 - [Daf Truck](https://nl.gta5-mods.com/vehicles/truck-camion-daf-xf-euro-6)
+- [PolyZone](https://github.com/mkafrin/PolyZone)
 
 
 
