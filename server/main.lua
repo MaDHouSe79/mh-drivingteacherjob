@@ -172,6 +172,8 @@ QBCore.Commands.Add(Config.Command['remove'], Lang:t('command.remove_help'), {{"
 					['T'] = false,
 					['P'] = false,
 					['H'] = false,
+					['AMB'] = false,
+					['POL'] = false,
 					['business'] = student.PlayerData.metadata['licences'].business,
 					['weapon'] = student.PlayerData.metadata['licences'].weapon
 				}
