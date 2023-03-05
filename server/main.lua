@@ -71,9 +71,32 @@ local function CreateLicense(target)
 		license = license .. p
 	end
 
+	if target.PlayerData.metadata['licences'].R then
+		local race = "R"
+		if target.PlayerData.metadata['licences'].B then 
+			race = "/R"
+		end
+		license = license .. race
+	end
+
+	if target.PlayerData.metadata['licences'].AMB then
+		local amb = "AMB"
+		if target.PlayerData.metadata['licences'].B then 
+			amb = "/AMB"
+		end
+		license = license .. amb
+	end
+
+	if target.PlayerData.metadata['licences'].POL then
+		local pol = "POL"
+		if target.PlayerData.metadata['licences'].B then 
+			pol = "/POL"
+		end
+		license = license .. pol
+	end
+
 	return license
 end
-
 local function LicenseInfo(target)
 	local info = {
 		firstname = target.PlayerData.charinfo.firstname,
