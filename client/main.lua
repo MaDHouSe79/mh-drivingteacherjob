@@ -651,23 +651,24 @@ CreateThread(function()
         Wait(10)
     end
 end)
-
 CreateThread(function()
     while true do
-        local ped = PlayerPedId()
-        local pos = GetEntityCoords(ped)
-        local isPointInside = garageCombo:isPointInside(pos)
-        if PlayerData.job.name == 'drivingteacher' and PlayerData.job.onduty then
-            if isPointInside then
-                if IsPedInAnyVehicle(ped, false) then
-                    exports['qb-core']:DrawText(Lang:t('menu.park_vehicle'))
+        if LocalPlayer.state.isLoggedIn then
+            local ped = PlayerPedId()
+            local pos = GetEntityCoords(ped)
+            local isPointInside = garageCombo:isPointInside(pos)
+            if QBCore.Functions.GetPlayerData().job.name == 'drivingteacher' and QBCore.Functions.GetPlayerData().job.onduty then
+                if isPointInside then
+                    if IsPedInAnyVehicle(ped, false) then
+                        exports['qb-core']:DrawText(Lang:t('menu.park_vehicle'))
+                    else
+                        exports['qb-core']:DrawText(Lang:t('menu.open_garage'))
+                    end
+                    isInside = true
                 else
-                    exports['qb-core']:DrawText(Lang:t('menu.open_garage'))
+                    if isInside then exports['qb-core']:HideText() end
+                    isInside = false
                 end
-                isInside = true
-            else
-                if isInside then exports['qb-core']:HideText() end
-                isInside = false
             end
         end
         Wait(1000)
