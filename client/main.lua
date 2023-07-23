@@ -320,6 +320,34 @@ local function DeleteGarages()
     end
 end
 
+local function LoadOnDuty()
+    -- Toggle Duty
+    PlayerData = QBCore.Functions.GetPlayerData()
+    for k, v in pairs(Config.Locations["duty"]) do
+        if PlayerData.job.name == 'drivingteacher' then
+            exports['qb-target']:RemoveZone("drivingteacher_"..k)
+            exports['qb-target']:AddBoxZone("drivingteacher_"..k, v, 1, 1, {
+                name = "drivingteacher_"..k,
+                heading = 11,
+                debugPoly = false,
+                minZ = v.z - 1,
+                maxZ = v.z + 1,
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        event = "mh-drivingteacherjob:client:ToggleDuty",
+                        icon = "fas fa-sign-in-alt",
+                        label = "Sign In",
+                        job = "drivingteacher",
+                    },
+                },
+                distance = 1.5
+            })
+        end
+    end
+end
+
 local function LoadGarages()
     for k, v in pairs(Config.Garages) do
         for _, garage in pairs(v) do
@@ -377,6 +405,8 @@ end
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
+    Wait(1000)
+    LoadOnDuty()
     LoadBlips()
     LoadGarages()
 end)
@@ -390,6 +420,7 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
     DeleteAllBlips()
     exports['qb-core']:HideText()
     Wait(100)
+    LoadOnDuty()
     LoadBlips()
     LoadGarages()
 end)
@@ -397,6 +428,7 @@ end)
 AddEventHandler('onResourceStart', function(resource)
     if resource == GetCurrentResourceName() then
         PlayerData = QBCore.Functions.GetPlayerData()
+	LoadOnDuty()
         LoadBlips()
         LoadGarages()
         exports['qb-core']:HideText()
