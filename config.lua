@@ -23,14 +23,14 @@ Config.Garages = {
             blip  = 50,                                                -- blip icon
             coords = {x = 435.52386, y = -975.8889, z = 25.699798, h = 88.224151}, -- map blip
             zones = {
-                vector2(-979.14624023438, -2070.6496582032),
-                vector2(-989.44140625, -2060.1560058594),
-                vector2(-981.58544921875, -2050.8298339844),
-                vector2(-971.2191772461, -2061.1416015625),
+                vector2(228.42134094238, -1382.8787841797),
+                vector2(225.22723388672, -1384.1031494141),
+                vector2(221.87046813965, -1375.654296875),
+                vector2(225.01322937012, -1374.4896240234),
             },
-            minZ = 6.4056758880616,
-            maxZ = 12.405675888062,
-	    debugPoly = false,
+            minZ = 27.441860198975,
+            maxZ = 33.441860198975,
+	        debugPoly = false,
         },
         [1] = {
             name = "Air School Garage",                           -- blip name
@@ -46,7 +46,7 @@ Config.Garages = {
             },
             minZ = 10.944558143616,
             maxZ = 16.944558143616,
-	    debugPoly = false,
+	        debugPoly = false,
         },
         [2] = {
             name = "Boat School Garage",                           -- blip name
@@ -66,7 +66,7 @@ Config.Garages = {
             },
             minZ = -1.3987105488778,
             maxZ = 4.6012894511222,
-	    debugPoly = false,
+	        debugPoly = false,
         }, -- you can add jog garage more here
 
     },-- you can add more job garages here
@@ -75,19 +75,19 @@ Config.Garages = {
 Config.Locations = {
 
     ['duty'] = {
-	[0] = vector4(200.7381, -1388.1324, 30.5835, 48.9072),
+	    [0] = vector4(200.7381, -1388.1324, 30.5835, 48.9072),
     },
 
     ["stations"] = {
         [1] = {
-	    label = "DriveSchool Het Klungeltje", 
+	        label = "DriveSchool Het Klungeltje", 
             coords = vector4(218.03, -1391.48, 30.59, 141.9),
             heading = 139.21,
             blipSprite = 498,
             blipColour = 2,
             blipScale = 0.8,
             showBlip = true,
-	    type = nil,
+	        type = nil,
         },
         [2] = {
             label = "DriveSchool Theorie Examen",
@@ -100,10 +100,10 @@ Config.Locations = {
             type = nil,
         },
         [3] = {
-	    label = "Rijschool Garage", 
-            coords = vector4(-981.4899, -2060.1426, 9.4057, 220.2482),
-            spawn = vector4(-976.1197, -2065.4656, 9.4057, 220.4663),
-            heading = 220.4663,
+	        label = "Rijschool Garage", 
+            coords = vector4(226.3569, -1382.7115, 30.4731, 200.5626),
+            spawn = vector4(226.3569, -1382.7115, 30.4731, 200.5626),
+            heading = 200.5626,
             blipSprite = 50,
             blipColour = 2,
             blipScale = 0.5,
@@ -111,7 +111,7 @@ Config.Locations = {
             type = 'car',
         },
         [4] = {
-	    label = "Vliegschool Garage", 
+	        label = "Vliegschool Garage", 
             coords = vector4(-1242.5720, -2289.8779, 13.9445, 52.4307),
             spawn = vector4(-1243.0061, -2290.5723, 13.9445, 62.2139),
             heading = 62.2139,
@@ -122,7 +122,7 @@ Config.Locations = {
             type = 'air',
         },
         [5] = {
-	    label = "Boatschool Garage", 
+	        label = "Boatschool Garage", 
             coords = vector4(-726.3984, -1326.9353, 2.7375, 227.2540),
             spawn = vector4(-728.0537, -1328.1594, 0.0594, 229.6167),
             heading = 229.6167,
