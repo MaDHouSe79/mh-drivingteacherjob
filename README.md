@@ -38,7 +38,7 @@
 - Create a folder `[mh]` in `resources`. 
 - Put `mh-drivingteacherjob` in to `resources/[mh]`.
 - Load this script after target and polyzone.
-- in sever.sfg after standalone add -> `ensure [mh]`
+- in sever.sfg after `[standalone]` add -> `ensure [mh]`
 - After you done with the instructions below, you can restart the server.
 
 
