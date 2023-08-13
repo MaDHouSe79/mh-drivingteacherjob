@@ -35,7 +35,7 @@
 
 
 ## Installation:
-- Create a folder [mh] in resources. 
+- Create a folder `[mh]` in `resources`. 
 - Put `mh-drivingteacherjob` in to `resources/[mh]`.
 - Load this script afer polyzone, like `ensure [mh]`
 - After you done with the instructions below, you can restart the server.
