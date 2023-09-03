@@ -348,19 +348,18 @@ local function LoadOnDuty()
     end
 end
 
-local function LoadGarages()
-    for k, v in pairs(Config.Garages) do
-        for _, garage in pairs(v) do
-            zones[#zones + 1] = PolyZone:Create(garage.zones, {
-                name = garage.name,
-                minZ = garage.minZ,
-                maxZ = garage.maxZ,
-                debugPoly = garage.debugPoly,
-            })
-        end
+for k, v in pairs(Config.Garages) do
+    for _, garage in pairs(v) do
+        zones[#zones + 1] = PolyZone:Create(garage.zones, {
+            name = garage.name,
+            minZ = garage.minZ,
+            maxZ = garage.maxZ,
+            debugPoly = garage.debugPoly,
+        })
     end
-    garageCombo = ComboZone:Create(zones, { name = "garagecombo001", debugPoly = false })
 end
+garageCombo = ComboZone:Create(zones, { name = "garagecombo001", debugPoly = false })
+
 
 local function DeleteAllBlips()
     if blips ~= nil then
@@ -408,7 +407,6 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Wait(1000)
     LoadOnDuty()
     LoadBlips()
-    LoadGarages()
 end)
 
 RegisterNetEvent('QBCore:Player:SetPlayerData', function(data)
@@ -422,7 +420,6 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
     Wait(100)
     LoadOnDuty()
     LoadBlips()
-    LoadGarages()
 end)
 
 AddEventHandler('onResourceStart', function(resource)
@@ -430,7 +427,6 @@ AddEventHandler('onResourceStart', function(resource)
         PlayerData = QBCore.Functions.GetPlayerData()
 	LoadOnDuty()
         LoadBlips()
-        LoadGarages()
         exports['qb-core']:HideText()
     end
 end)
