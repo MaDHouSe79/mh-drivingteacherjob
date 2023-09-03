@@ -620,7 +620,6 @@ RegisterNetEvent('mh-drivingteacherjob:client:ToggleDuty', function()
     exports['qb-core']:HideText()
     Wait(100)
     LoadBlips()
-    LoadGarages()
 end)
 
 CreateThread(function()
