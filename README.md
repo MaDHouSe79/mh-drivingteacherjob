@@ -106,6 +106,7 @@ QBShared.StarterItems = {
 ['drivingteacher'] = {
     name  = 'drivingteacher',
 	label = 'Driving school',
+        type  = 'driveschool',
 	defaultDuty = false,
 	offDutyPay = false,
 	grades = {
