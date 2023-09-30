@@ -286,11 +286,5 @@ var element = '<div class="lawyer-list"><div class="no-lawyers">There are no dri
 $(".lawyers-list").append(element);
 ```
 
-
-## 🐞 Any bugs let my know.
-- Have fun with this awesome qb-drivingteacherjob mod 😎👍
-
-
-## 🙈 Youtube & Discord
+## 🙈 Youtube
 - [Youtube](https://www.youtube.com/c/MaDHouSe79)
-- [Discord](https://discord.gg/cEMSeE9dgS)
