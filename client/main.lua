@@ -625,29 +625,7 @@ end)
 CreateThread(function()
     -- Toggle Duty
     if LocalPlayer.state.isLoggedIn then
-        for k, v in pairs(Config.Locations["duty"]) do
-            if PlayerData.job.name == 'drivingteacher' then
-                exports['qb-target']:RemoveZone("drivingteacher_"..k)
-                exports['qb-target']:AddBoxZone("drivingteacher_"..k, v, 1, 1, {
-                    name = "drivingteacher_"..k,
-                    heading = 11,
-                    debugPoly = false,
-                    minZ = v.z - 1,
-                    maxZ = v.z + 1,
-                }, {
-                    options = {
-                        {
-                            type = "client",
-                            event = "mh-drivingteacherjob:client:ToggleDuty",
-                            icon = "fas fa-sign-in-alt",
-                            label = "Sign In",
-                            job = "drivingteacher",
-                        },
-                    },
-                    distance = 1.5
-                })
-            end
-        end
+        LoadOnDuty()
     end
 end)
 
