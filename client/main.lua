@@ -338,7 +338,7 @@ local function LoadOnDuty()
                         type = "client",
                         event = "mh-drivingteacherjob:client:ToggleDuty",
                         icon = "fas fa-sign-in-alt",
-                        label = "Sign In",
+                        label = Lang:t('info.onoff_duty'),
                         job = "drivingteacher",
                     },
                 },
