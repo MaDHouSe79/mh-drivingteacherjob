@@ -623,13 +623,6 @@ RegisterNetEvent('mh-drivingteacherjob:client:ToggleDuty', function()
 end)
 
 CreateThread(function()
-    -- Toggle Duty
-    if LocalPlayer.state.isLoggedIn then
-        LoadOnDuty()
-    end
-end)
-
-CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
             if IsControlJustReleased(0, 38) and isInside then
