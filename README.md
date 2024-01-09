@@ -288,3 +288,7 @@ $(".lawyers-list").append(element);
 
 ## 🙈 Youtube
 - [Youtube](https://www.youtube.com/c/MaDHouSe79)
+
+# LICENSE
+[GPL LICENSE](./LICENSE)<br />
+&copy; [MaDHouSe79](https://www.youtube.com/@MaDHouSe79)
