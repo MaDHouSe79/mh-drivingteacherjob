@@ -678,6 +678,7 @@ CreateThread(function()
         Wait(10)
     end
 end)
+
 CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
