@@ -278,6 +278,9 @@ if (drivingteacher.length > 0) {
 }
 ```
 
+# My Youtube Channel and Discord
+- [Subscribe](https://www.youtube.com/c/@MaDHouSe79) 
+- [Discord](https://discord.gg/vJ9EukCmJQ)
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 176
 ```js
@@ -285,8 +288,5 @@ $(".lawyers-list").append('<br><h1 style="font-size:1.641025641025641vh; padding
 var element = '<div class="lawyer-list"><div class="no-lawyers">There are no driving teachers.</div></div>'
 $(".lawyers-list").append(element);
 ```
-
-## 🙈 Youtube
-- [Youtube](https://www.youtube.com/c/MaDHouSe79)
 
 &copy; [MaDHouSe79](https://www.youtube.com/@MaDHouSe79)
