@@ -139,9 +139,9 @@ QBCore.Commands.Add(Config.Command['add'], Lang:t('command.add_help'), {{"id", "
 			TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.passed_for_license', {license = license}), "success", 5000)
 				TriggerClientEvent('QBCore:Notify', source,  Lang:t('notify.granted_access_license', {id = studentId, license = license}), "success", 5000)
 				student.Functions.RemoveItem('driver_license', 1)
-				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
+				TriggerClientEvent('qb-inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
 				student.Functions.AddItem('driver_license', 1, nil, LicenseInfo(student))
-				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], 'add')
+				TriggerClientEvent('qb-inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], 'add')
 			end
 		else
 			TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.invalid_id'), "error", 5000)
@@ -181,7 +181,7 @@ QBCore.Commands.Add(Config.Command['remove'], Lang:t('command.remove_help'), {{"
 				student.Functions.SetMetaData('licences', licenses)
 				student.Functions.RemoveItem('driver_license', 1, nil)
 
-				TriggerClientEvent('inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
+				TriggerClientEvent('qb-inventory:client:ItemBox', studentId, QBCore.Shared.Items['driver_license'], "remove")
 				TriggerClientEvent('QBCore:Notify', studentId, Lang:t('notify.your_license_has_been_taken', {player = Player.PlayerData.charinfo.firstname .." "..Player.PlayerData.charinfo.lastname}), "success", 5000)
 				TriggerClientEvent('QBCore:Notify', source, Lang:t('notify.license_has_been_taken', {id = studentId}), "success", 5000)
 			end
@@ -204,9 +204,9 @@ RegisterServerEvent('mh-drivingteacherjob:server:givelicince', function(id, lice
 			TriggerClientEvent('QBCore:Notify', studentID, Lang:t('notify.passed_for_license', {license = license}), "success", 5000)
 			TriggerClientEvent('QBCore:Notify', src,  Lang:t('notify.granted_access_license', {id = studentID, license = license}), "success", 5000)
 			student.Functions.RemoveItem('driver_license', 1)
-			TriggerClientEvent('inventory:client:ItemBox', studentID, QBCore.Shared.Items['driver_license'], "remove")
+			TriggerClientEvent('qb-inventory:client:ItemBox', studentID, QBCore.Shared.Items['driver_license'], "remove")
 			student.Functions.AddItem('driver_license', 1, nil, LicenseInfo(student))
-			TriggerClientEvent('inventory:client:ItemBox', studentID, QBCore.Shared.Items['driver_license'], 'add')
+			TriggerClientEvent('qb-inventory:client:ItemBox', studentID, QBCore.Shared.Items['driver_license'], 'add')
 		end
 	end
 end)
@@ -239,7 +239,7 @@ RegisterServerEvent('mh-drivingteacherjob:server:takelicince', function(id)
 			}
 			target.Functions.SetMetaData('licences', licenses)
 			target.Functions.RemoveItem('driver_license', 1)
-			TriggerClientEvent('inventory:client:ItemBox', targetID, QBCore.Shared.Items['driver_license'], "remove")
+			TriggerClientEvent('qb-inventory:client:ItemBox', targetID, QBCore.Shared.Items['driver_license'], "remove")
 			TriggerClientEvent('QBCore:Notify', targetID, Lang:t('notify.your_license_has_been_taken', {player = Player.PlayerData.charinfo.firstname .." "..Player.PlayerData.charinfo.lastname}), "success", 5000)
 			TriggerClientEvent('QBCore:Notify', src, Lang:t('notify.license_has_been_taken', {id = targetID}), "success", 5000)
 		end
