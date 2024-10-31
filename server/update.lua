@@ -1,26 +1,19 @@
 local script = GetCurrentResourceName()
+local url = "https://raw.githubusercontent.com" .. "/MaDHouSe79/" .. script .. "/master/version"
+local version = GetResourceMetadata(script, "version")
 
-local function checkVersion(err, responseText, headers)
-    curVersion = LoadResourceFile(script, "version")
-    if responseText == nil then
-        print("[^6"..script.."^7] Check for script update ^1FAILED^7")
-        return
-    end
-    if curVersion ~= responseText and tonumber(curVersion) < tonumber(responseText) then
-        updateavail = true
-        print("\n^1----------------------------------------------------------------------------------^7")
-        print(script.." is outdated, latest version is: ^2"..responseText.."^7, installed version: ^1"..curVersion.."^7!\nupdate from https://github.com/MaDHouSe79/"..script.."")
-        print("^1----------------------------------------------------------------------------------^7")
-    elseif tonumber(curVersion) > tonumber(responseText) then
-        print("\n^3----------------------------------------------------------------------------------^7")
-        print(script.." git version is: ^2"..responseText.."^7, installed version: ^1"..curVersion.."^7!")
-		print("READ THE UPDATES.md to see if you have to make any changes!!")
-        print("^3----------------------------------------------------------------------------------^7")
-    else
-        print("\n"..script.." is up to date. (^2"..curVersion.."^7)")
-    end
-end
-
-Citizen.CreateThread( function()
-    PerformHttpRequest("https://raw.githubusercontent.com".."/MaDHouSe79/"..script.."/master/version", checkVersion, "GET")
+CreateThread(function()
+    PerformHttpRequest(url, function(err, text, headers)
+        if (text ~= nil) then
+            version = string.gsub(version, "%s+", "")
+            text = string.gsub(text, "%s+", "")
+            if version == text then
+                print("^0[^4Update Check^0: ^1"..script.."^0] - [Installed Version:^2 "..version.."^0] [Github Version:^2 "..text.."^0] [Status:^2Ok^0] ")
+            else
+                print("^0[^4Update Check^0: ^1"..script.."^0] - Newer version of "..script.." found [Old:^1 "..version.."^0] [New:^2 "..text.."^0]")      
+            end
+        else
+            print("[^6" .. script .. "^0] Check for script update ^1FAILED^0, unable to find the host.")
+        end
+    end, "GET", "", "")
 end)
