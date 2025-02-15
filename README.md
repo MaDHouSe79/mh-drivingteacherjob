@@ -89,12 +89,12 @@ PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
     ['CE'] = false, -- truck + trailer
     ['D'] = false, -- bus
     ['DE'] = false, -- bus + trailer
-    ['P'] = false, -- plane or heli pilot
+    ['P'] = false, -- plane
     ['T'] = false, -- boat
-    ['H'] = false, -- Helikopter
+    ['H'] = false, -- helikopter
     ['R'] = false, -- race
-    ['AMB'] = false, -- Ambulance
-    ['POL'] = false, -- Police
+    ['AMB'] = false, -- ambulance
+    ['POL'] = false, -- police
     ['business'] = false,
     ['weapon'] = false
 }
