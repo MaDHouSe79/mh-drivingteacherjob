@@ -26,6 +26,9 @@
   <img alig src="https://github-profile-trophy.vercel.app/?username=MaDHouSe79&margin-w=15&column=6" />
 </p>
 
+# My Youtube
+- [Subscribe](https://www.youtube.com/c/@MaDHouSe79) 
+
 # MH Driving Teacher Job for QBCore.
 - There are 15 licences you can give to players with this job.
 
@@ -300,9 +303,6 @@ if (drivingteacher.length > 0) {
 }
 ```
 
-# My Youtube Channel and Discord
-- [Subscribe](https://www.youtube.com/c/@MaDHouSe79) 
-- [Discord](https://discord.gg/vJ9EukCmJQ)
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 176
 ```js
