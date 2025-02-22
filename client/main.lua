@@ -28,7 +28,7 @@ end
 garageCombo = ComboZone:Create(zones, { name = "garagecombo001", debugPoly = false })
 
 local function SetFuel(vehicle, fuel)
-    exports['LegacyFuel']:SetFuel(vehicle, fuel + 0.0)
+    exports[Config.FuelScript]:SetFuel(vehicle, fuel + 0.0)
 end
 
 local function GetDistance(from, to)
