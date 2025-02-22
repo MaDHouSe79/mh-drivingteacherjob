@@ -8,6 +8,8 @@ Config.UseMHVehicleKeyItem = false
 Config.GiveKeyScriptTrigger = "qb-vehiclekeys:server:AcquireVehicleKeys"
 Config.RemoveKeyScriptTrigger = "qb-vehiclekeys:client:RemoveKeys"
 
+Config.FuelScript = "LegacyFuel"
+
 Config.Command = {
     ['add']    = "give-licence",
     ['remove'] = "take-licence",
