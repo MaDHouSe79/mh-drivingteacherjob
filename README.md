@@ -76,30 +76,6 @@
 ## Read The README.md!!! 
 ![foto1](https://naskho.org/images/ReadPlease.gif)
 
-
-## Edit `qb-core\server\player.lua` around line 120 to this code:
-```lua
-PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
-    ['N'] = false, -- theory
-    ['AM'] = false, -- scooter
-    ['A'] = false, -- motorcycle
-    ['B'] = false, -- car
-    ['BE'] = false, -- car
-    ['C'] = false, -- truck
-    ['CE'] = false, -- truck + trailer
-    ['D'] = false, -- bus
-    ['DE'] = false, -- bus + trailer
-    ['P'] = false, -- plane
-    ['T'] = false, -- boat
-    ['H'] = false, -- helikopter
-    ['R'] = false, -- race
-    ['AMB'] = false, -- ambulance
-    ['POL'] = false, -- police
-    ['business'] = false,
-    ['weapon'] = false
-}
-```
-
 #### Edit `qb-core\shared\main.lua`:
 - why? cause if people join the server and create a new character,
 - they get a driver_license, and we don't want that.
@@ -114,21 +90,14 @@ QBShared.StarterItems = {
 ## Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenus`:
 - This is the bossmenu location
 ```lua
-['drivingteacher'] = {
-    vector3(215.24, -1401.76, 30.58) --  (Bossmenu)
-},
-```
-## Add to `resources/[qb]/qb-management/client/cl_config.lua` to `Config.BossMenuZones`:
-- This is the bossmenu zone
-```lua
-['drivingteacher'] = {
-    { coords = vector3(215.24, -1401.76, 30.58), length = 1.15, width = 2.6, heading = 307.07, minZ = 43.59, maxZ = 44.99 },
+drivingteacher = {
+    vector3(215.24, -1401.76, 30.58)
 },
 ```
 
 ## Add To `qb-core/qb-shared/jobs.lua`:
 ```lua
-['drivingteacher'] = {
+drivingteacher = {
     name  = 'drivingteacher',
 	label = 'Driving school',
         type  = 'driveschool',
@@ -225,7 +194,6 @@ QBShared.StarterItems = {
 },
 ```
 
-
 ## Edit qb-phone Option 1 `resources/[qb]/qb-phone/server.lua` around line 1055
 - Change the Command bill with this code below
 ```lua
@@ -265,20 +233,14 @@ end)
 if biller.PlayerData.job.name == "police" or biller.PlayerData.job.name == 'ambulance' or biller.PlayerData.job.name == 'mechanic' or biller.PlayerData.job.name == 'drivingteacher' then
 ```
 
-
-
-
 ## Edit `qb-phone/html/js/lawyers.js`
 - to call a driving teacher (if this player is online)
 - you can change the colers in rgb()
-
-
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 9/10
 ```js 
 var drivingteacher = [];
 ```
-
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 36
 ```js
@@ -286,7 +248,6 @@ if (lawyer.typejob == "drivingteacher") {
     drivingteacher.push(lawyer);
 }
 ```
-
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 134
 ```js
@@ -302,7 +263,6 @@ if (drivingteacher.length > 0) {
     $(".lawyers-list").append(element);
 }
 ```
-
 
 ## Add to `qb-phone/html/js/lawyers.js` around line 176
 ```js
