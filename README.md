@@ -15,7 +15,7 @@
         <img src="https://img.shields.io/github/forks/MaDHouSe79/mh-drivingteacherjob"/> 
     </a>  
     <a href="https://github.com/MaDHouSe79/mh-drivingteacherjob/stargazers">
-        <img src="https://img.shields.io/github/stars/MH-Scripts/mh-drivingteacherjob?color=white"/> 
+        <img src="https://img.shields.io/github/stars/MaDHouSe79/mh-drivingteacherjob?color=white"/> 
     </a>
     <a href="https://github.com/MaDHouSe79/mh-drivingteacherjob/blob/main/LICENSE">
         <img src="https://img.shields.io/github/license/MaDHouSe79/mh-drivingteacherjob?color=black"/> 
